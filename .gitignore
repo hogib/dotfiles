@@ -1,0 +1,40 @@
+# Laptop packets from pacman. useless unless you're me
+laptop_native.txt 
+# same for yay 
+yays.txt 
+# --- OS Junk ---
+.DS_Store
+Thumbs.db
+*~
+*.swp
+*.swo
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+.venv
+venv/
+ENV/
+
+# --- IDEs / Editors ---
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# --- Environment Variables (CRITICAL: Never commit keys) ---
+.env
+.env.local
+private_keys/
+
+# --- Build / Dist ---
+build/
+dist/
+*.so
+*.o
+bin/
+
+# workspaces shall be ignored to be fixed later. configure monitors and workspace binding as described in wiki 
+log.txt 
+niri/.config/niri/monitors.kdl
