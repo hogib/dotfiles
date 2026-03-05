@@ -1,3 +1,4 @@
+#Utils
 alias ls='eza --icons --group-directories-first'
 alias ll='eza -al --icons --group-directories-first'
 alias tree='eza --tree --icons'
@@ -40,9 +41,9 @@ alias vpn='nordvpn connect'
 alias disc='nordvpn disconnect'
 alias killsw='nordvpn set killswitch on'
 alias nkillsw='nordvpn set killswitch off'
-alias pissh='kitty +kitten ssh oguzpi@100.122.97.124'
+alias pisshr='kitty +kitten ssh oguzpi@100.122.97.124'
 alias mainssh'kitty +kitten ssh hogib@100.126.204.8'
-
+alias pisshl='kitty +kitten ssh oguzpi@192.168.1.112'
 
 #rclone mount google drive to ~/Drive
 alias gdrive='rclone mount gdrive: ~/Drive'
