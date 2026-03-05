@@ -31,6 +31,8 @@ alias -s conf='helix'
 alias -s txt='helix'
 
 #Nordvpn Quick
+alias vup='nordvpn disconnect && sudo wg-quick up nord'
+alias dvup='sudo wg-quick down nord'
 alias germ='nordvpn connect Germany'
 alias usa='nordvpn connect United_States'
 alias uk='nordvpn connect United_Kingdom'
