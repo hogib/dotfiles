@@ -10,8 +10,9 @@ alias rm='rm -i'
 alias cp='advcp -i -g'
 alias mv='advmv -i -g'
 
-alias rc='helix ~/.zshrc'
+alias rc='nvim ~/.zshrc'
 alias src='source ~/.zshrc'
+alias arc='nvim ~/dotfiles/zsh/configs/aliases.zsh'
 alias cod='codium'
 alias clr='clear'
 
@@ -27,9 +28,9 @@ alias cheat='bat cheatsheet.md'
 # Suffix aliases
 alias -s py='python'
 alias -s md='bat'
-alias -s toml='helix'
-alias -s conf='helix'
-alias -s txt='helix'
+alias -s toml='nvim'
+alias -s conf='nvim'
+alias -s txt='nvim'
 
 #Nordvpn Quick
 alias vup='nordvpn disconnect && sudo wg-quick up nord'
@@ -43,7 +44,7 @@ alias killsw='nordvpn set killswitch on'
 alias nkillsw='nordvpn set killswitch off'
 alias pisshr='kitty +kitten ssh oguzpi@100.122.97.124'
 alias mainssh'kitty +kitten ssh hogib@100.126.204.8'
-alias pisshl='kitty +kitten ssh oguzpi@192.168.1.112'
+alias pisshl='kitty +kitten ssh oguzpi@192.168.1.105'
 
 #rclone mount google drive to ~/Drive
 alias gdrive='rclone mount gdrive: ~/Drive'
