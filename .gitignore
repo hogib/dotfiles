@@ -38,3 +38,4 @@ bin/
 # workspaces shall be ignored to be fixed later. configure monitors and workspace binding as described in wiki 
 log.txt 
 niri/.config/niri/monitors.kdl
+niri/.config/niri/inputs.kdl
