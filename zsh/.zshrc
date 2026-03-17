@@ -9,11 +9,11 @@ plugins=(
     extract
     rust
     sudo
-    zsh-history-substring-search
     you-should-use
     zsh-shift-select
-    zsh-vi-mode
     kitty
+    zsh-history-substring-search
+    zsh-vi-mode
     zsh-syntax-highlighting
 )
 
@@ -31,8 +31,8 @@ export HISTSIZE=10000
 export SAVEHIST=10000
 export PATH="$HOME/.local/bin:$HOME/dotfiles/shell_scripts:$PATH"
 setopt appendhistory
-export EDITOR='helix'
-export VISUAL='helix'
+export EDITOR='nvim'
+export VISUAL='nvim'
 export PATH=/opt/cuda/bin:$PATH
 export PATH="$HOME/.cargo/bin:$PATH"
 
