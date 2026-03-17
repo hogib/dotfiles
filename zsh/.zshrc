@@ -12,6 +12,7 @@ plugins=(
     zsh-history-substring-search
     you-should-use
     zsh-shift-select
+    zsh-vi-mode
     kitty
     zsh-syntax-highlighting
 )
@@ -52,8 +53,3 @@ source ~/dotfiles/zsh/configs/aliases.zsh
 if [[ -f ~/dotfiles/zsh/shell_scripts/functions.zsh ]]; then
     source ~/dotfiles/zsh/shell_scripts/functions.zsh
 fi
-
-if [[ -o interactive ]]; then
-	eval fastfetch    
-fi
-
