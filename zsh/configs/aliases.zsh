@@ -24,7 +24,6 @@ alias transfetch="hyfetch -C=$HOME/.config/transfetch.json"
 alias bifetch="hyfetch -C=$HOME/.config/hyfetchbi.json"
 
 #Cheat
-alias cheat="bat cheatsheet.md"
 
 # Suffix aliases
 alias -s py="python"
