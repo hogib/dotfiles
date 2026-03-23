@@ -15,7 +15,7 @@ require('lazy').setup {
   spec = {
     --  { import = 'plugins' },
     { import = 'custom.plugins' },
-    { import = 'kickstart.plugins' },
+  -- { import = 'kickstart.plugins' },
   },
 
   change_detection = { notify = false },

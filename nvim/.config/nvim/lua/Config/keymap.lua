@@ -49,7 +49,8 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 -- vim.keymap.set("n", "<C-S-j>", "<C-w>J", { desc = "Move window to the lower" })
 -- vim.keymap.set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
 
-vim.keymap.set('n', '<leader>e', vim.cmd.Ex, { desc = 'Ex file explorer' })
+vim.keymap.set('n', '<leader>cd', vim.cmd.Ex, { desc = 'Ex File Explorer' })
+vim.keymap.set('n', '<leader>e', vim.cmd.Neotree, { desc = 'Neotree File Explorer' })
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
