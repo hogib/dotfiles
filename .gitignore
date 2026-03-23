@@ -39,3 +39,4 @@ bin/
 log.txt 
 niri/.config/niri/monitors.kdl
 niri/.config/niri/inputs.kdl
+nvim/.config/nvim/lazy-lock.json
