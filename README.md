@@ -55,24 +55,6 @@ Key tools wired up in `.zshrc`:
 | [thefuck](https://github.com/nvbn/thefuck) | Command correction |
 | [direnv](https://direnv.net/) | Per-directory env vars |
 
-### Fastfetch (`fastfetch/`)
-Multiple [Fastfetch](https://github.com/fastfetch-cli/fastfetch) config presets:
-
-| Preset | Alias |
-|---|---|
-| `config.jsonc` | `fastfetch` / `neofetch` |
-| `config-archbtw.jsonc` | `archfetch` |
-| `config-ytu-transparent.jsonc` | `ytufetch` |
-| `config-compact.jsonc` | – |
-| `config-pokemon.jsonc` | – |
-| `config-v2.jsonc` | – |
-
-### Fetch configs (`fetch_configs/`)
-[hyfetch](https://github.com/hykilpikonna/hyfetch) presets for pride-flag-coloured Neofetch output:
-
-- `hyfetchbi.json` — bi flag (`bifetch`)
-- `transfetch.json` — trans flag (`transfetch`)
-
 ## Installation
 
 > **Requires:** git, GNU Stow
