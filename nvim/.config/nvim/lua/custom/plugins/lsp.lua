@@ -56,15 +56,14 @@ return {
       -- 2. Fetch capabilities from blink.cmp to tell the LSP we support autocomplete
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       local has_blink, blink = pcall(require, 'blink.cmp')
-      if has_blink then
-        capabilities = blink.get_lsp_capabilities(capabilities)
-      end
+      if has_blink then capabilities = blink.get_lsp_capabilities(capabilities) end
 
       local servers = {
         clangd = {},
         pyright = {},
         rust_analyzer = {},
         stylua = {},
+        gopls = {},
         lua_ls = {
           settings = {
             Lua = {
@@ -117,7 +116,7 @@ return {
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
-        python = { "isort", "black" },
+        python = { 'isort', 'black' },
       },
     },
   },
@@ -138,9 +137,7 @@ return {
           -- 4. Uncomment friendly-snippets so Python actually has boilerplate snippets
           {
             'rafamadriz/friendly-snippets',
-            config = function()
-              require('luasnip.loaders.from_vscode').lazy_load()
-            end,
+            config = function() require('luasnip.loaders.from_vscode').lazy_load() end,
           },
         },
         opts = {},
