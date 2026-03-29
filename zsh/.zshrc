@@ -56,3 +56,7 @@ source ~/dotfiles/zsh/configs/aliases.zsh
 if [[ -f ~/dotfiles/zsh/shell_scripts/functions.zsh ]]; then
     source ~/dotfiles/zsh/shell_scripts/functions.zsh
 fi
+
+if [[ -f ~/Codings/Zsh_specs/dinit.zsh ]]; then
+    source ~/Codings/Zsh_specs/dinit.zsh 
+fi

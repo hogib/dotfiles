@@ -2,6 +2,7 @@ input {
     keyboard {
         xkb {
 
+		layout "tr"
         }
 
     
