@@ -60,3 +60,7 @@ fi
 if [[ -f ~/Codings/Zsh_specs/dinit.zsh ]]; then
     source ~/Codings/Zsh_specs/dinit.zsh 
 fi
+
+if [[ -f ~/Codings/Zsh_specs/functions.zsh ]]; then
+    source ~/Codings/Zsh_specs/functions.zsh 
+fi
