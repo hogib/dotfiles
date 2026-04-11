@@ -64,6 +64,7 @@ return {
         rust_analyzer = {},
         stylua = {},
         gopls = {},
+        ts_ls = {},
         lua_ls = {
           settings = {
             Lua = {
