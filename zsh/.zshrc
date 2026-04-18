@@ -34,7 +34,7 @@ export MANPATH="$HOME/.local/share/man:$MANPATH"
 export HISTFILE=~/.zsh_history
 export HISTSIZE=10000
 export SAVEHIST=10000
-export PATH="$HOME/.local/bin:$HOME/dotfiles/shell_scripts:/usr/local/bin:/opt/cuda/bin:$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.local/bin:$HOME/dotfiles/shell_scripts:/usr/local/bin:/opt/cuda/bin:$HOME/.cargo/bin:$HOME/.local/share/gem/ruby/3.4.0/bin:$PATH"
 setopt appendhistory
 export EDITOR='nvim'
 export VISUAL='nvim'
