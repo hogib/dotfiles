@@ -135,7 +135,6 @@ return {
           return 'make install_jsregexp'
         end)(),
         dependencies = {
-          -- 4. Uncomment friendly-snippets so Python actually has boilerplate snippets
           {
             'rafamadriz/friendly-snippets',
             config = function() require('luasnip.loaders.from_vscode').lazy_load() end,
