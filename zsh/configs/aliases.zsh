@@ -9,6 +9,7 @@ alias cat='bat'
 alias rm='rm -i'
 alias cp='advcp -i -g'
 alias mv='advmv -i -g'
+alias lg='lazygit'
 
 alias rc='nvim ~/.zshrc'
 alias src='source ~/.zshrc'

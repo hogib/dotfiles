@@ -60,6 +60,10 @@ if [[ -f ~/dotfiles/zsh/shell_scripts/functions.zsh ]]; then
     source ~/dotfiles/zsh/shell_scripts/functions.zsh
 fi
 
+if [[ -f ~/dotfiles/zsh/configs/aliases.zsh ]]; then
+    source ~/dotfiles/zsh/configs/aliases.zsh 
+fi
+
 if [[ -f ~/Codings/Zsh/functions.zsh ]]; then
     source ~/Codings/Zsh/functions.zsh 
 fi
