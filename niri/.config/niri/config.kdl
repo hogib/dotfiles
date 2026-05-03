@@ -1,15 +1,12 @@
 hotkey-overlay {
-    // Uncomment this line to disable the "Important Hotkeys" pop-up at startup.
     skip-at-startup
 }
 
-// You can change the path where screenshots are saved.
-// A ~ at the front will be expanded to the home directory.
-// The path is formatted with strftime(3) to give you the screenshot date and time.
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 
 
 // modular design look all made so good by me
+include optional=true "./workspaces.kdl"
 include "./env.kdl"
 include "./binds.kdl" 
 include "./windowrules.kdl" 

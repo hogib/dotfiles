@@ -22,4 +22,5 @@ window-rule {
 window-rule {
     match title="Steam"
     open-maximized true 
+    open-on-workspace "1"
 }
