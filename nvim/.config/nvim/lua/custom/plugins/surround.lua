@@ -5,5 +5,13 @@ return {
     event = 'VeryLazy',
     -- Optional: See `:h nvim-surround.configuration` and `:h nvim-surround.setup` for details
     config = function() require('nvim-surround').setup() end,
+    find = function()
+      require('nvim-surround.config').get_selection {
+        query = {
+          capture = '@call.outer',
+          type = 'textobjects',
+        },
+      }
+    end,
   },
 }

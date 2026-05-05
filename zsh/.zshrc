@@ -6,7 +6,6 @@ fi
 
 
 plugins=(    
-    poetry
     git
     fzf-tab
     archlinux
@@ -50,10 +49,6 @@ eval "$(direnv hook zsh)"
 # FZF-Tab Preview
 zstyle ':fzf-tab:complete:*:*' fzf-preview 'bat --color=always --style=numbers --line-range=:500 {}'
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
-
-if [[ -f ~/Codings/Zsh/aliases.zsh ]]; then
-    source ~/Codings/Zsh/aliases.zsh
-fi
 
 
 if [[ -f ~/dotfiles/zsh/shell_scripts/functions.zsh ]]; then

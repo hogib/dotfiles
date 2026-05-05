@@ -80,8 +80,6 @@ return {
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
       require('mason-lspconfig').setup()
 
-      -- 3. Neovim 0.11 Native Setup Loop
-      -- We inject the blink capabilities into the server config before enabling it
       for name, server in pairs(servers) do
         server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
         vim.lsp.config(name, server)
