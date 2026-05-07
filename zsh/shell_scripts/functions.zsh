@@ -68,7 +68,7 @@ shutdwn() {
     trap - SIGINT
     shutdown -h now
 }
-fetchrulette() {
+fetchrulette() { # doesn't really work atm
     fetches=(
         "fastfetch"
         "bifetch"
@@ -82,7 +82,7 @@ fetchrulette() {
     selected_fetch="${fetches[$index]}"
     eval "$selected_fetch"
 }
-caffeine(){
+caffeine(){ # inhibit idling 
     if [ "$1" = "on" ]; then
         echo "Caffeine mode ON (Idling disabled)"
         systemd-inhibit --what=idle --who="User" --why="Manual Override" sleep infinity &
@@ -99,4 +99,8 @@ caffeine(){
         echo "Usage: caffeine [on|off]"
     fi
 
+}
+
+silent() { # pipe all output to dev/null and disown
+  "$@" &> /dev/null &!
 }
