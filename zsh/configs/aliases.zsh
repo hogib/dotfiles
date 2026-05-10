@@ -16,6 +16,7 @@ alias src='source ~/.zshrc'
 alias arc='nvim ~/dotfiles/zsh/configs/aliases.zsh'
 alias cod='codium'
 alias clr='clear'
+alias dots='cd ~/dotfiles && git pull && cd'
 
 #Fetches
 alias neofetch='fastfetch'
@@ -24,7 +25,6 @@ alias archfetch='fastfetch -c ~/.config/fastfetch/config-archbtw.jsonc'
 alias transfetch='hyfetch -C=$HOME/.config/transfetch.json'
 alias bifetch='hyfetch -C=$HOME/.config/hyfetchbi.json'
 
-#Cheat
 
 # Suffix aliases
 alias -s py='python'
