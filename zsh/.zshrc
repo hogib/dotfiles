@@ -55,6 +55,10 @@ if [[ -f ~/dotfiles/zsh/shell_scripts/functions.zsh ]]; then
     source ~/dotfiles/zsh/shell_scripts/functions.zsh
 fi
 
+if [[ -f ~/dotfiles/zsh/shell_scripts/weird.zsh ]]; then
+    source ~/dotfiles/zsh/shell_scripts/weird.zsh
+fi
+
 if [[ -f ~/dotfiles/zsh/configs/aliases.zsh ]]; then
     source ~/dotfiles/zsh/configs/aliases.zsh 
 fi
