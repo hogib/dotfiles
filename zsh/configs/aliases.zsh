@@ -17,6 +17,7 @@ alias arc='nvim ~/dotfiles/zsh/configs/aliases.zsh'
 alias cod='codium'
 alias clr='clear'
 alias dots='cd ~/dotfiles && git pull && cd'
+alias gpf='git push origin main --force-with-lease'
 
 #Fetches
 alias neofetch='fastfetch'

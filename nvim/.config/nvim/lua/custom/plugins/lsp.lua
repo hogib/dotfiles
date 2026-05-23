@@ -116,6 +116,13 @@ return {
       formatters_by_ft = {
         lua = { 'stylua' },
         python = { 'isort', 'black' },
+        go = { 'gofmt', 'goimports' },
+        c = { 'clang_format' },
+      },
+      formatters = {
+        clang_format = {
+          prepend_args = { '--style=file', '--falback-style=LLVM' },
+        },
       },
     },
   },

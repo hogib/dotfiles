@@ -15,7 +15,7 @@ vim.o.breakindent = true
 -- Enable undo/redo changes even after closing and reopening a file
 vim.o.undofile = true
 
-vim.opt.tabstop = 4 -- Number of spaces that a <Tab> in the file counts for
+vim.opt.tabstop = 2 -- Number of spaces that a <Tab> in the file counts for
 vim.opt.shiftwidth = 4 -- Size of an indent
 vim.opt.softtabstop = 4 -- Number of spaces that a <Tab> counts for while performing editing operations
 
