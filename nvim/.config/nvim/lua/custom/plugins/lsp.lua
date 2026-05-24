@@ -121,7 +121,7 @@ return {
       },
       formatters = {
         clang_format = {
-          prepend_args = { '--style=file', '--falback-style=LLVM' },
+          prepend_args = { '--style=file', '--fallback-style=LLVM' },
         },
       },
     },
