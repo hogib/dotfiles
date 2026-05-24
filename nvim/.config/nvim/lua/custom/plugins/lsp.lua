@@ -59,7 +59,14 @@ return {
       if has_blink then capabilities = blink.get_lsp_capabilities(capabilities) end
 
       local servers = {
-        clangd = {},
+        clangd = {
+          cmd = {
+            'clangd',
+            '--background-index',
+            '--clang-tidy',
+            '--header-insertion=iwyu',
+          },
+        },
         pyright = {},
         rust_analyzer = {},
         stylua = {},
