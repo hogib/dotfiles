@@ -125,6 +125,7 @@ return {
         python = { 'isort', 'black' },
         go = { 'gofmt', 'goimports' },
         c = { 'clang_format' },
+        javascript = { 'prettierd', 'prettier', stop_after_first = true },
       },
       formatters = {
         clang_format = {
