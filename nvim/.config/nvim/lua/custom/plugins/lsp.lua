@@ -72,6 +72,8 @@ return {
         stylua = {},
         gopls = {},
         ts_ls = {},
+        bashls = {},
+        cmake = {},
         lua_ls = {
           settings = {
             Lua = {
@@ -126,6 +128,7 @@ return {
         go = { 'gofmt', 'goimports' },
         c = { 'clang_format' },
         javascript = { 'prettierd', 'prettier', stop_after_first = true },
+        bash = { 'shfmt' },
       },
       formatters = {
         clang_format = {
