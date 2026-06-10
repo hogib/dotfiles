@@ -45,9 +45,8 @@ return {
           ['l'] = 'focus_preview',
           ['<C-b>'] = { 'scroll_preview', config = { direction = 10 } },
           ['<C-f>'] = { 'scroll_preview', config = { direction = -10 } },
+          ['<F5>'] = 'refresh',
         },
-
-        ['<F5>'] = 'refresh',
       },
     },
   },
