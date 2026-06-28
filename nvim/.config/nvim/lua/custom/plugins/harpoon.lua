@@ -14,7 +14,7 @@ return {
     vim.keymap.set('n', '<leader>2', function() harpoon:list():select(2) end, { desc = 'Harpoon file 2' })
     vim.keymap.set('n', '<leader>3', function() harpoon:list():select(3) end, { desc = 'Harpoon file 3' })
     vim.keymap.set('n', '<leader>4', function() harpoon:list():select(4) end, { desc = 'Harpoon file 4' })
-
+    vim.keymap.set('n', '<leader>d', function() require('harpoon'):list():clear() end, { desc = 'Clear Harpoon List' })
     local conf = require('telescope.config').values
     local function toggle_telescope(harpoon_files)
       local file_paths = {}
@@ -34,6 +34,6 @@ return {
         :find()
     end
 
-    vim.keymap.set('n', '<C-e>', function() toggle_telescope(harpoon:list()) end, { desc = 'Open Harpoon in Telescope' })
+    vim.keymap.set('n', '<leader>o', function() toggle_telescope(harpoon:list()) end, { desc = 'Open Harpoon in Telescope' })
   end,
 }
