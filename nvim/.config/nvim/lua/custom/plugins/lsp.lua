@@ -21,6 +21,9 @@ return {
             '--clang-tidy',
             '--header-insertion=iwyu',
           },
+          init_options = {
+            fallbackFlags = { '-std=c++23' },
+          },
         },
         pyright = {},
         rust_analyzer = {},

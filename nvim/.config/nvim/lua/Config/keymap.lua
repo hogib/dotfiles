@@ -43,6 +43,13 @@ vim.keymap.set(nav_modes, 'Ğ', '{', { remap = true })
 vim.keymap.set(nav_modes, 'Ü', '}', { remap = true })
 
 vim.keymap.set('n', '<leader>cd', vim.cmd.Ex, { desc = 'netrw File Explorer' })
+
+vim.keymap.set(
+  'n',
+  '<leader>th',
+  function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled(current_buf), current_buf) end,
+  { desc = '[T]oggle Inlay [H]ints' }
+)
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
