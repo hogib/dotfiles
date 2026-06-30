@@ -39,6 +39,4 @@ alias cc='clang'
 alias c='clang'
 alias c++='clang++'
 alias cx='clang++'
-alias cmk='cmake build --build'
-alias comp='meson compile -C builddir'
 
