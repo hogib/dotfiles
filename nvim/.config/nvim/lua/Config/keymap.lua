@@ -74,3 +74,12 @@ function _G.set_terminal_keymaps()
 end
 
 vim.cmd 'autocmd! TermOpen term://* lua set_terminal_keymaps()'
+
+vim.keymap.set('n', '<leader>tl', function()
+  local config = vim.diagnostic.config()
+  if type(config.virtual_text) == 'table' or config.virtual_text == true then
+    vim.diagnostic.config { virtual_text = false }
+  else
+    vim.diagnostic.config { virtual_text = true }
+  end
+end, { desc = 'Toggle diagnostic virtual text' })

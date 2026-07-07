@@ -16,10 +16,11 @@ return {
       local servers = {
         clangd = {
           cmd = {
-            'clangd',
+            '/usr/bin/clangd',
             '--background-index',
             '--clang-tidy',
             '--header-insertion=iwyu',
+            '--query-driver=/**/*clang++*,/**/*g++*',
           },
           init_options = {},
         },
@@ -45,7 +46,6 @@ return {
 
       require('mason-tool-installer').setup {
         ensure_installed = {
-          'clangd',
           'pyright',
           'rust-analyzer',
           'gopls',
