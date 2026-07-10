@@ -1,15 +1,17 @@
 return {
-  'NeogitOrg/neogit',
+  'kdheepak/lazygit.nvim',
   lazy = true,
-  dependencies = {
-    'sindrets/diffview.nvim',
-
-    'm00qek/baleia.nvim',
-
-    'nvim-telescope/telescope.nvim',
+  cmd = {
+    'LazyGit',
+    'LazyGitConfig',
+    'LazyGitCurrentFile',
+    'LazyGitFilter',
+    'LazyGitFilterCurrentFile',
   },
-  cmd = 'Neogit',
+  dependencies = {
+    'nvim-lua/plenary.nvim',
+  },
   keys = {
-    { '<leader>gg', '<cmd>Neogit<cr>', desc = 'Show Neogit UI' },
+    { '<leader>gg', '<cmd>LazyGit<cr>', desc = 'LazyGit' },
   },
 }
