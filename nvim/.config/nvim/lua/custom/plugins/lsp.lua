@@ -24,8 +24,21 @@ return {
           },
           init_options = {},
         },
-        pyright = {},
         rust_analyzer = {},
+
+        jedi_language_server = {
+          root_dir = function(fname)
+            local util = require 'lspconfig.util'
+            return util.root_pattern('.git', 'pyproject.toml', 'setup.py', 'requirements.txt')(fname) or util.path.dirname(fname)
+          end,
+          init_options = {
+            workspace = {
+              extraPaths = {
+                vim.fn.getcwd() .. '/src',
+              },
+            },
+          },
+        },
         gopls = {},
         bashls = {},
         cmake = {},
@@ -41,12 +54,12 @@ return {
             },
           },
         },
+        mesonlsp = {},
         ts_ls = {},
       }
 
       require('mason-tool-installer').setup {
         ensure_installed = {
-          'pyright',
           'rust-analyzer',
           'gopls',
           'bash-language-server',
@@ -61,6 +74,7 @@ return {
           'clang-format',
           'prettierd',
           'prettier',
+          'mesonlsp',
         },
       }
 
@@ -108,10 +122,16 @@ return {
         cpp = { 'clang-format' },
         javascript = { 'prettierd', 'prettier', stop_after_first = true },
         bash = { 'shfmt' },
+        meson = { 'meson_format' },
       },
       formatters = {
         ['clang-format'] = {
           prepend_args = { '--style=file', '--fallback-style=LLVM' },
+        },
+        ['meson_format'] = {
+          command = 'meson',
+          args = { 'format', '-' },
+          stdin = true,
         },
       },
     },
