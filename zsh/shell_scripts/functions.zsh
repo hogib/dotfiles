@@ -104,3 +104,11 @@ caffeine(){ # inhibit idling
 silent() { # pipe all output to dev/null and disown
   "$@" &> /dev/null &!
 }
+
+connect() {
+    echo 'connect 80:C3:BA:96:B9:85' | bluetoothctl 
+}
+
+disconnect() {
+    echo 'disconnect' | bluetoothctl
+}

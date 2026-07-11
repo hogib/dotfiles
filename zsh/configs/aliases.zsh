@@ -14,6 +14,7 @@ alias lg='lazygit'
 alias rc='nvim ~/.zshrc'
 alias src='source ~/.zshrc'
 alias arc='nvim ~/dotfiles/zsh/configs/aliases.zsh'
+alias frc='nvim ~/dotfiles/zsh/shell_scripts/functions.zsh'
 alias clr='clear'
 alias dots='cd ~/dotfiles && git pull && cd'
 alias gpf='git push origin main --force-with-lease'
@@ -40,3 +41,7 @@ alias c='clang'
 alias c++='clang++'
 alias cx='clang++'
 
+# Global aliases
+alias -g G="| grep -i"
+alias -g C="| wl-copy"
+alias -g L="| less"
