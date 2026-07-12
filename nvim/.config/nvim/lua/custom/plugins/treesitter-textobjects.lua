@@ -46,6 +46,9 @@ return {
 
       vim.keymap.set({ 'x', 'o' }, 'at', function() select.select_textobject('@struct.outer', 'textobjects') end, { desc = 'struct' })
       vim.keymap.set({ 'x', 'o' }, 'it', function() select.select_textobject('@struct.inner', 'textobjects') end, { desc = 'struct' })
+
+      vim.keymap.set('n', '<leader>I', function() require('nvim-treesitter-textobjects.swap').swap_next '@parameter.inner' end)
+      vim.keymap.set('n', '<leader>A', function() require('nvim-treesitter-textobjects.swap').swap_next '@parameter.outer' end)
     end,
   },
 }
