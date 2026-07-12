@@ -1,54 +1,72 @@
 return {
   {
-    'nvim-treesitter/nvim-treesitter-textobjects',
-    branch = 'main',
-    init = function() vim.g.no_plugin_maps = true end,
+    'nvim-treesitter/nvim-treesitter',
+    build = ':TSUpdate',
     config = function()
-      -- Setup the plugin options
+      local parsers = { 'c', 'cpp', 'lua', 'vim', 'vimdoc' }
+      local installed = require('nvim-treesitter.config').get_installed()
+
+      local missing = vim.iter(parsers):filter(function(p) return not vim.tbl_contains(installed, p) end):totable()
+
+      if #missing > 0 then require('nvim-treesitter').install(missing) end
+
+      vim.api.nvim_create_autocmd('FileType', {
+        desc = 'Enable native Tree-sitter syntax highlighting',
+        callback = function() pcall(vim.treesitter.start) end,
+      })
+    end,
+  },
+  {
+    'nvim-treesitter/nvim-treesitter-textobjects',
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    config = function()
       require('nvim-treesitter-textobjects').setup {
-        lookahead = true,
-        selection_modes = {
-          ['@parameter.outer'] = 'v', -- charwise
-          ['@function.outer'] = 'v', -- linewise
-          ['@class.outer'] = '<c-v>', -- blockwise
+        select = {
+          lookahead = true, -- Automatically jump forward to matching object
         },
       }
 
-      -- Define the keymaps
-      local select = require 'nvim-treesitter-textobjects.select'
+      local ts_select = require 'nvim-treesitter-textobjects.select'
+
+      local function map(keys, query, desc)
+        vim.keymap.set({ 'x', 'o' }, keys, function() ts_select.select_textobject(query, 'textobjects') end, { desc = desc })
+      end
 
       -- Functions
-      vim.keymap.set({ 'x', 'o' }, 'af', function() select.select_textobject('@function.outer', 'textobjects') end, { desc = 'function' })
-      vim.keymap.set({ 'x', 'o' }, 'if', function() select.select_textobject('@function.inner', 'textobjects') end, { desc = 'function' })
+      map('af', '@function.outer', 'Select outer function')
+      map('if', '@function.inner', 'Select inner function')
 
-      -- Classes
-      vim.keymap.set({ 'x', 'o' }, 'ac', function() select.select_textobject('@class.outer', 'textobjects') end, { desc = 'class' })
-      vim.keymap.set({ 'x', 'o' }, 'ic', function() select.select_textobject('@class.inner', 'textobjects') end, { desc = 'class' })
+      -- C Structs / Enums / Classes
+      map('ac', '@class.outer', 'Select outer struct/enum')
+      map('ic', '@class.inner', 'Select inner struct/enum')
 
-      -- Scope
-      vim.keymap.set({ 'x', 'o' }, 'ao', function() select.select_textobject('@local.scope', 'locals') end, { desc = 'scope' })
+      -- Parameters
+      map('aa', '@parameter.outer', 'Select outer parameter')
+      map('ia', '@parameter.inner', 'Select inner parameter')
 
-      -- Conditionals (if statements, switch cases)
-      vim.keymap.set({ 'x', 'o' }, 'ai', function() select.select_textobject('@conditional.outer', 'textobjects') end, { desc = 'conditional' })
-      vim.keymap.set({ 'x', 'o' }, 'ii', function() select.select_textobject('@conditional.inner', 'textobjects') end, { desc = 'conditional' })
+      local ts_move = require 'nvim-treesitter-textobjects.move'
 
-      -- Loops (for, while)
-      vim.keymap.set({ 'x', 'o' }, 'al', function() select.select_textobject('@loop.outer', 'textobjects') end, { desc = 'loop' })
-      vim.keymap.set({ 'x', 'o' }, 'il', function() select.select_textobject('@loop.inner', 'textobjects') end, { desc = 'loop' })
+      -- Helper function to map movement keys
+      local function map_move(keys, func, query, desc)
+        vim.keymap.set({ 'n', 'x', 'o' }, keys, function() func(query, 'textobjects') end, { desc = desc })
+      end
 
-      -- Blocks / {} Scopes
-      vim.keymap.set({ 'x', 'o' }, 'ab', function() select.select_textobject('@block.outer', 'textobjects') end, { desc = 'block' })
-      vim.keymap.set({ 'x', 'o' }, 'ib', function() select.select_textobject('@block.inner', 'textobjects') end, { desc = 'block' })
+      -- Jump forward
+      map_move(']f', ts_move.goto_next_start, '@function.outer', 'Next function start')
+      map_move(']c', ts_move.goto_next_start, '@class.outer', 'Next struct/enum start')
+      map_move(']a', ts_move.goto_next_start, '@parameter.inner', 'Next parameter start')
 
-      -- Comments
-      vim.keymap.set({ 'x', 'o' }, 'a/', function() select.select_textobject('@comment.outer', 'textobjects') end, { desc = 'comment block' })
-      vim.keymap.set({ 'x', 'o' }, 'i/', function() select.select_textobject('@comment.inner', 'textobjects') end, { desc = 'comment block' })
+      -- Jump backward
+      map_move('[f', ts_move.goto_previous_start, '@function.outer', 'Previous function start')
+      map_move('[c', ts_move.goto_previous_start, '@class.outer', 'Previous struct/enum start')
+      map_move('[a', ts_move.goto_previous_start, '@parameter.inner', 'Previous parameter start')
 
-      vim.keymap.set({ 'x', 'o' }, 'at', function() select.select_textobject('@struct.outer', 'textobjects') end, { desc = 'struct' })
-      vim.keymap.set({ 'x', 'o' }, 'it', function() select.select_textobject('@struct.inner', 'textobjects') end, { desc = 'struct' })
+      -- Jump to the END of a text object
+      map_move(']F', ts_move.goto_next_end, '@function.outer', 'Next function end')
+      map_move(']C', ts_move.goto_next_end, '@class.outer', 'Next struct/enum end')
 
-      vim.keymap.set('n', '<leader>I', function() require('nvim-treesitter-textobjects.swap').swap_next '@parameter.inner' end)
-      vim.keymap.set('n', '<leader>A', function() require('nvim-treesitter-textobjects.swap').swap_next '@parameter.outer' end)
+      map_move('[F', ts_move.goto_previous_end, '@function.outer', 'Previous function end')
+      map_move('[C', ts_move.goto_previous_end, '@class.outer', 'Previous struct/enum end')
     end,
   },
 }
