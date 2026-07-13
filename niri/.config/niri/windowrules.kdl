@@ -7,7 +7,7 @@ window-rule {
 }
 
 window-rule {
-    match title="Firefox"
+    match app-id="firefox"
     open-maximized true 
    
 }

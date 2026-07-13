@@ -56,12 +56,14 @@ return {
         },
         mesonlsp = {},
         ts_ls = {},
+        just = {},
       }
 
       require('mason-tool-installer').setup {
         ensure_installed = {
           'rust-analyzer',
           'gopls',
+          'just',
           'bash-language-server',
           'cmake-language-server',
           'lua-language-server',

@@ -48,7 +48,7 @@ layout {
         // off
 
         // How many logical pixels the ring extends out from the windows.
-        width 2
+        width 1
 
         // Colors can be set in a variety of ways:
         // - CSS named colors: "red"
@@ -58,12 +58,6 @@ layout {
         // Color of the ring on the active monitor.
         active-color "#f52a2a"
 
-        // Color of the ring on inactive monitors.
-        //
-        // The focus ring only draws around the active window, so the only place
-        // where you can see its inactive-color is on other monitors.
-        inactive-color "#505050"
-
         // You can also use gradients. They take precedence over solid colors.
         // Gradients are rendered the same as CSS linear-gradient(angle, from, to).
         // The angle is the same as in linear-gradient, and is optional,
@@ -71,37 +65,14 @@ layout {
         // You can use any CSS linear-gradient tool on the web to set these up.
         // Changing the color space is also supported, check the wiki for more info.
         //
-        active-gradient from="#ff0000" to="#121ebd" angle=45
+        active-gradient from="#6813e8" to="#4524ed" relative-to="workspace-view"
 
         // You can also color the gradient relative to the entire view
         // of the workspace, rather than relative to just the window itself.
         // To do that, set relative-to="workspace-view".
         //
-        inactive-gradient from="#b951f5" to="#df3968" angle=45 relative-to="workspace-view"
     }
 
-    // You can also add a border. It's similar to the focus ring, but always visible.
-    border {
-        // The settings are the same as for the focus ring.
-        // If you enable the border, you probably want to disable the focus ring.
-        off
-
-        width 4
-        active-color "#ffc87f"
-        inactive-color "#505050"
-
-        // Color of the border around windows that request your attention.
-        urgent-color "#9b0000"
-
-        // Gradients can use a few different interpolation color spaces.
-        // For example, this is a pastel rainbow gradient via in="oklch longer hue".
-        //
-        // active-gradient from="#e5989b" to="#ffb4a2" angle=45 relative-to="workspace-view" in="oklch longer hue"
-
-        inactive-gradient from="#1b47e4" to="#97cb13" angle=45 relative-to="workspace-view"
-    }
-
-    // You can enable drop shadows for windows.
     shadow {
         // Uncomment the next line to enable shadows.
         on
@@ -162,4 +133,20 @@ animations {
     // Slow down all animations by this factor. Values below 1 speed them up instead.
     // slowdown 3.0
 }
+
+window-rule {
+    background-effect {
+        blur false
+        xray true
+    }
+}
+
+layer-rule {
+  match namespace="^noctalia-(bar-[^\"]+|notification|dock|panel|attached-panel|osd)$"
+  background-effect {
+    xray true
+    blur false
+  }
+}
+
 prefer-no-csd
