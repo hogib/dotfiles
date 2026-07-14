@@ -1,10 +1,13 @@
 # vim:fileencoding=utf-8:foldmethod=marker
 
 # BEGIN_KITTY_THEME
-# Liquid Carbon Transparent
-include ./themes/noctalia.conf
+# Tokyo Night Moon
+include current-theme.conf
 # END_KITTY_THEME
 
+# Background opacity
+background_opacity 1
+background_blur 0
 # BEGIN_KITTY_FONTS
 font_family      family="JetBrainsMono Nerd Font Mono"
 bold_font        auto
@@ -12,4 +15,28 @@ italic_font      auto
 bold_italic_font auto
 font_size 12
 # END_KITTY_FONTS
+
+# Misc configs
 enable_audio_bell no
+background_blur 1
+mouse_hide_wait -1.0
+scrollback_lines 10000
+
+# Multiplexter options
+enabled_layouts tall, fat, grid, stack
+tab_bar_style powerline
+tab_bar_edge top
+tab_bar_min_tabs 2
+
+# Multiplexter Keymaps
+map ctrl+shift+h neighboring_window left
+map ctrl+shift+l neighboring_window right
+map ctrl+shift+k neighboring_window up
+map ctrl+shift+j neighboring_window down
+
+map ctrl+shift+alt+h move_window left
+map ctrl+shift+alt+l move_window right
+map ctrl+shift+alt+k move_window up
+map ctrl+shift+alt+j move_window down
+
+map ctrl+shift+ı next_layout
