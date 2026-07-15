@@ -45,7 +45,6 @@ export VISUAL='nvim'
 # ==========================================
 source <(fzf --zsh)
 eval "$(zoxide init zsh --cmd cd)"
-eval "$(thefuck --alias)"
 eval "$(direnv hook zsh)"
 
 # FZF-Tab Preview

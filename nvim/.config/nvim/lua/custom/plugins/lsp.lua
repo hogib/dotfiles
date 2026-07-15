@@ -41,7 +41,6 @@ return {
         },
         gopls = {},
         bashls = {},
-        cmake = {},
         lua_ls = {
           settings = {
             Lua = {
@@ -65,7 +64,6 @@ return {
           'gopls',
           'just',
           'bash-language-server',
-          'cmake-language-server',
           'lua-language-server',
           'typescript-language-server',
           'stylua',
