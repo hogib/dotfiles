@@ -28,6 +28,7 @@ return {
 
         jedi_language_server = {
           root_dir = function(fname)
+            local fname = vim.api.nvim_buf_get_name(fname)
             local util = require 'lspconfig.util'
             return util.root_pattern('.git', 'pyproject.toml', 'setup.py', 'requirements.txt')(fname) or util.path.dirname(fname)
           end,
@@ -123,6 +124,8 @@ return {
         javascript = { 'prettierd', 'prettier', stop_after_first = true },
         bash = { 'shfmt' },
         meson = { 'meson_format' },
+        markdown = { 'prettier' },
+        markdown_inline = { 'prettier' },
       },
       formatters = {
         ['clang-format'] = {
