@@ -16,31 +16,30 @@ return {
       local servers = {
         clangd = {
           cmd = {
-            '/usr/bin/clangd',
+            'clangd',
             '--background-index',
             '--clang-tidy',
             '--header-insertion=iwyu',
-            '--query-driver=/**/*clang++*,/**/*g++*',
+            '--completion-style=detailed',
+            '--function-arg-placeholders',
+            '--fallback-style=llvm',
           },
           init_options = {},
         },
         rust_analyzer = {},
-
-        jedi_language_server = {
-          root_dir = function(fname)
-            local fname = vim.api.nvim_buf_get_name(fname)
-            local util = require 'lspconfig.util'
-            return util.root_pattern('.git', 'pyproject.toml', 'setup.py', 'requirements.txt')(fname) or util.path.dirname(fname)
-          end,
-          init_options = {
-            workspace = {
-              extraPaths = {
-                vim.fn.getcwd() .. '/src',
+        gopls = {},
+        basedpyright = {
+          settings = {
+            basedpyright = {
+              analysis = {
+                typeCheckingMode = 'standard',
+                diagnosticMode = 'openFilesOnly',
+                autoSearchPaths = true,
+                useLibraryCodeForTypes = true,
               },
             },
           },
         },
-        gopls = {},
         bashls = {},
         lua_ls = {
           settings = {
@@ -65,6 +64,7 @@ return {
           'gopls',
           'just',
           'bash-language-server',
+          'basedpyright',
           'lua-language-server',
           'typescript-language-server',
           'stylua',
@@ -117,12 +117,13 @@ return {
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
-        python = { 'isort', 'black' },
+        python = { 'isort', 'black', stop_after_first = true },
         go = { 'gofmt', 'goimports' },
         c = { 'clang-format' },
         cpp = { 'clang-format' },
         javascript = { 'prettierd', 'prettier', stop_after_first = true },
         bash = { 'shfmt' },
+        zsh = { 'shfmt' },
         meson = { 'meson_format' },
         markdown = { 'prettier' },
         markdown_inline = { 'prettier' },
