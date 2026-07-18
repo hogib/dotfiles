@@ -5,13 +5,16 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 plugins=(
+    you-should-use
     git
-    fzf-tab archlinux zsh-autosuggestions
+    fzf-tab
+    archlinux
+    zsh-autosuggestions
     extract
+    web-search
+    colored-man-pages
     rust
     sudo
-    you-should-use
-    zsh-shift-select
     kitty
     zsh-history-substring-search
     zsh-vi-mode
@@ -46,6 +49,9 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
 # ZSH options
 setopt auto_cd
 autoload -U zmv
+autoload -Uz compinit
+compinit
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
 if [[ -f ~/dotfiles/zsh/shell_scripts/functions.zsh ]]; then
     source ~/dotfiles/zsh/shell_scripts/functions.zsh

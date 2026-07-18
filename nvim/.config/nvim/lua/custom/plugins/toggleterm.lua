@@ -15,6 +15,7 @@ return {
         open_mapping = [[<c-0>]],
         direction = 'vertical',
         auto_scroll = true,
+        border = 'curved',
         insert_mappings = true, -- whether or not the open mapping applies in insert mode
         terminal_mappings = true, -- whether or not the open mapping applies in the opened terminals
       }
