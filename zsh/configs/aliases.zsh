@@ -25,6 +25,7 @@ alias -s md='bat'
 alias -s toml='nvim'
 alias -s conf='nvim'
 alias -s txt='nvim'
+alias -s {cpp,hpp,c,h}=nvim
 
 #Nordvpn Quick
 alias germ='nordvpn connect Germany'
@@ -35,7 +36,7 @@ alias dsc='nordvpn disconnect'
 alias killsw='nordvpn set killswitch on'
 alias nkillsw='nordvpn set killswitch off'
 
-#compiler and build system aliases 
+#compiler and build system aliases
 alias cc='clang'
 alias c='clang'
 alias c++='clang++'
