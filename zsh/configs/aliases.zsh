@@ -46,3 +46,5 @@ alias cx='clang++'
 alias -g G="| grep -i"
 alias -g C="| wl-copy"
 alias -g L="| less"
+
+alias nv='nvim .'

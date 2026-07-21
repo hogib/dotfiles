@@ -12,7 +12,12 @@ return {
 
       local ok_blink, blink = pcall(require, 'blink.cmp')
       if ok_blink then capabilities = blink.get_lsp_capabilities(capabilities) end
+      -- Multithreading
+      local nproc = tonumber(vim.fn.system { 'nproc' })
 
+      local jnproc = ''
+
+      if 0 ~= nproc then jnproc = '--j=' .. (nproc - 1) end
       local servers = {
         clangd = {
           cmd = {
@@ -23,6 +28,7 @@ return {
             '--completion-style=detailed',
             '--function-arg-placeholders',
             '--fallback-style=llvm',
+            jnproc,
           },
           init_options = {},
         },
