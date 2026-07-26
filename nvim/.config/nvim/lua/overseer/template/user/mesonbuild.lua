@@ -4,40 +4,59 @@ return {
   },
 
   generator = function(opts, cb)
-    local tasks = {
-      {
-        name = 'Meson: Setup',
-        builder = function() return { cmd = { 'meson', 'setup', 'builddir' }, components = { 'default' } } end,
-      },
-      {
-        name = 'Meson: Compile All',
-        builder = function() return { cmd = { 'meson', 'compile', '-C', 'builddir' }, components = { 'default' } } end,
-      },
-      {
-        name = 'Meson: Test',
-        builder = function() return { cmd = { 'meson', 'test', '-C', 'builddir' }, components = { 'default' } } end,
-      },
+    local tasks = {}
+
+    -- Define your build configurations and their corresponding directories
+    local build_configs = {
+      { name = 'Debug', dir = 'build-dbg', type = 'debug' },
+      { name = 'Release', dir = 'build-rel', type = 'release' },
+      { name = 'RelWithDebInfo', dir = 'build-rd', type = 'debugoptimized' },
+      { name = 'MinSizeRel', dir = 'build-min', type = 'minsize' },
     }
 
-    -- dynamicccc didnt write this btw
-    if vim.fn.isdirectory 'builddir' == 1 then
-      local output = vim.fn.system { 'meson', 'introspect', '--targets', 'builddir' }
+    for _, cfg in ipairs(build_configs) do
+      -- 1. Setup Task (always available so you can initialize the directory)
+      table.insert(tasks, {
+        name = string.format('Meson Setup: %s', cfg.name),
+        builder = function()
+          return {
+            cmd = { 'meson', 'setup', cfg.dir, '--buildtype=' .. cfg.type },
+            components = { 'default' },
+          }
+        end,
+      })
 
-      if vim.v.shell_error == 0 and output ~= '' then
-        local ok, parsed_targets = pcall(vim.json.decode, output)
+      -- 2. Compile, Test, and Dynamic Targets (only if the directory has been set up)
+      if vim.fn.isdirectory(cfg.dir) == 1 then
+        table.insert(tasks, {
+          name = string.format('Meson Compile All [%s]', cfg.name),
+          builder = function() return { cmd = { 'meson', 'compile', '-C', cfg.dir }, components = { 'default' } } end,
+        })
 
-        if ok and type(parsed_targets) == 'table' then
-          for _, target in ipairs(parsed_targets) do
-            if target.name then
-              table.insert(tasks, {
-                name = 'Meson Compile: ' .. target.name,
-                builder = function()
-                  return {
-                    cmd = { 'meson', 'compile', '-C', 'builddir', target.name },
-                    components = { 'default' },
-                  }
-                end,
-              })
+        table.insert(tasks, {
+          name = string.format('Meson Test [%s]', cfg.name),
+          builder = function() return { cmd = { 'meson', 'test', '-C', cfg.dir }, components = { 'default' } } end,
+        })
+
+        -- Dynamically extract targets for this specific build directory
+        local output = vim.fn.system { 'meson', 'introspect', '--targets', cfg.dir }
+
+        if vim.v.shell_error == 0 and output ~= '' then
+          local ok, parsed_targets = pcall(vim.json.decode, output)
+
+          if ok and type(parsed_targets) == 'table' then
+            for _, target in ipairs(parsed_targets) do
+              if target.name then
+                table.insert(tasks, {
+                  name = string.format('Meson Compile %s: %s', cfg.name, target.name),
+                  builder = function()
+                    return {
+                      cmd = { 'meson', 'compile', '-C', cfg.dir, target.name },
+                      components = { 'default' },
+                    }
+                  end,
+                })
+              end
             end
           end
         end
