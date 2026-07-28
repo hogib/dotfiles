@@ -1,0 +1,59 @@
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+
+[user]
+	email = hoguzbolat@gmail.com
+	name = Oguzb
+
+[init]
+	defaultBranch = main
+
+[help]
+    autocorrect = prompt
+
+[merge]
+    conflictStyle = zdiff3
+
+[diff]
+    algorithm = histogram
+    renames = true
+    mnemonicPrefix = true
+
+[push]
+    autoSetupRemote = true
+    followTags = true
+    default = simple
+
+[pull]
+    rebase = true
+
+[column]
+    ui = auto
+
+[branch]
+    sort = -committerdate
+
+[tag]
+    sort = version:refname
+
+[fetch]
+    prune = true
+    pruneTags = true
+    all = true
+
+[core]
+    editor = nvim
+    excludesfile = ~/.gitignore_global
+    autocrlf = input
+    preloadindex = true
+
+[color "branch"]
+    current = yellow bold
+    local = green
+    remote = cyan
+
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
