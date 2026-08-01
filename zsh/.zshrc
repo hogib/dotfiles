@@ -14,6 +14,8 @@ plugins=(
     web-search
     colored-man-pages
     rust
+    rsync
+    cp
     sudo
     kitty
     zsh-history-substring-search
@@ -64,3 +66,7 @@ fi
 if [[ -f ~/dotfiles/zsh/configs/aliases.zsh ]]; then
     source ~/dotfiles/zsh/configs/aliases.zsh
 fi
+
+fpath+=~/.zfunc
+autoload -Uz compinit
+compinit
