@@ -124,7 +124,7 @@ return {
       formatters_by_ft = {
         lua = { 'stylua' },
         python = { 'isort', 'black', stop_after_first = true },
-        go = { 'gofmt', 'goimports' },
+        go = { 'gofmt', 'goimports', stop_after_first = true  },
         c = { 'clang-format' },
         cpp = { 'clang-format' },
         javascript = { 'prettierd', 'prettier', stop_after_first = true },

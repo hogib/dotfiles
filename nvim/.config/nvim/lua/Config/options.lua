@@ -15,10 +15,11 @@ vim.o.breakindent = true
 -- Enable undo/redo changes even after closing and reopening a file
 vim.o.undofile = true
 
-vim.opt.expandtab = true -- Convert tabs to spaces
 vim.opt.tabstop = 2 -- Number of spaces that a <Tab> in the file counts for
 vim.opt.shiftwidth = 2 -- Size of an indent
 vim.opt.softtabstop = 2 -- Number of spaces that a <Tab> counts for while performing editing operations
+vim.opt.expandtab = true -- Convert tabs to spaces
+vim.opt.listchars:remove("tab") -- Keeps 'list' on for trailing whitespace, etc., but stops showing tabs
 
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.o.ignorecase = true
