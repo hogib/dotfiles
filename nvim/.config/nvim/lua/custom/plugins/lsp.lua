@@ -32,7 +32,6 @@ return {
           },
           init_options = {},
         },
-        rust_analyzer = {},
         gopls = {},
         basedpyright = {
           settings = {
@@ -66,7 +65,6 @@ return {
 
       require('mason-tool-installer').setup {
         ensure_installed = {
-          'rust-analyzer',
           'gopls',
           'just',
           'bash-language-server',
@@ -124,7 +122,7 @@ return {
       formatters_by_ft = {
         lua = { 'stylua' },
         python = { 'isort', 'black', stop_after_first = true },
-        go = { 'gofmt', 'goimports', stop_after_first = true  },
+        go = { 'gofmt', 'goimports', stop_after_first = true },
         c = { 'clang-format' },
         cpp = { 'clang-format' },
         javascript = { 'prettierd', 'prettier', stop_after_first = true },
