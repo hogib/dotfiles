@@ -70,3 +70,5 @@ fi
 fpath+=~/.zfunc
 autoload -Uz compinit
 compinit
+
+fpath+=~/.zfunc; autoload -Uz compinit; compinit
