@@ -1,6 +1,7 @@
 return {
   {
     'neovim/nvim-lspconfig',
+    lazy = false,
     dependencies = {
       { 'mason-org/mason.nvim', opts = {} },
       'mason-org/mason-lspconfig.nvim',
@@ -8,16 +9,18 @@ return {
       { 'j-hui/fidget.nvim', opts = {} },
     },
     config = function()
+      require 'lspconfig'
+
       local capabilities = vim.lsp.protocol.make_client_capabilities()
 
       local ok_blink, blink = pcall(require, 'blink.cmp')
       if ok_blink then capabilities = blink.get_lsp_capabilities(capabilities) end
+
       -- Multithreading
       local nproc = tonumber(vim.fn.system { 'nproc' })
-
       local jnproc = ''
-
       if 0 ~= nproc then jnproc = '--j=' .. (nproc - 1) end
+
       local servers = {
         clangd = {
           cmd = {
@@ -90,6 +93,7 @@ return {
 
       for name, config in pairs(servers) do
         config.capabilities = vim.tbl_deep_extend('force', {}, capabilities, config.capabilities or {})
+
         vim.lsp.config(name, config)
         vim.lsp.enable(name)
       end
@@ -147,7 +151,6 @@ return {
 
   {
     'saghen/blink.cmp',
-    event = 'InsertEnter',
     version = '1.*',
     dependencies = {
       {
