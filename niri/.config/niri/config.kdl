@@ -16,4 +16,3 @@ include "./inputs.kdl"
 include "./startup.kdl"
 include optional=true "./laptop.kdl"
 
-include "noctalia.kdl"
