@@ -3,14 +3,13 @@
 shutdwn() {
     # --- CONFIG ---
     local COUNTDOWN_SEC=${1:-10}
-    
-    # --- COLORS ---
-    local BR=$'\e[1;31m'  # BOLD Red
-    local DR=$'\e[0;31m'  # DIM Red
-    local W=$'\e[1;37m'   # White
-    local N=$'\e[0m'      # Reset
 
-    
+    # --- COLORS ---
+    local BR=$'\e[1;31m' # BOLD Red
+    local DR=$'\e[0;31m' # DIM Red
+    local W=$'\e[1;37m'  # White
+    local N=$'\e[0m'     # Reset
+
     trap "echo -e '\n\n${W}[!] ADMINISTRATOR CREDENTIALS AUTHENTICATED. SEQUENCE ABORTED.${N}'; return" SIGINT
 
     #warning
@@ -24,9 +23,9 @@ shutdwn() {
 
     #pretend deleting a bunch of shit
     echo "${DR}--- BEGINNING RAPID DISK SANITIZATION ---${N}"
-    
+
     local -a dirs=("/usr/bin" "/etc/shadow" "/home/oguzb/projects" "/var/log" "/sys/kernel" "/boot/efi")
-    
+
     for i in {1..80}; do
         local rand_hex=$(printf "%08x" $((RANDOM * RANDOM)))
         local rand_dir=${dirs[$((RANDOM % ${#dirs[@]} + 1))]}
@@ -35,11 +34,11 @@ shutdwn() {
     done
     #dmesg | tail -n 50 | pv -qL 60
 
-    # ask for bs password 
+    # ask for bs password
     echo ""
     echo "${BR}[!] PRIMARY DATA VOLUMES UNMOUNTED.${N}"
     echo "${W}ADMINISTRATIVE OVERRIDE REQUIRED TO CANCEL FINAL WIPE.${N}"
-    
+
     echo -n "${W}ENTER PASSKEY > ${N}"
     read -rs input_pass
 
@@ -55,7 +54,7 @@ shutdwn() {
 
     # countdown from whatever to give me enough time to keyboard interrupt if I need pc to be on
     local i=$COUNTDOWN_SEC
-    while (( i > 0 )); do
+    while ((i > 0)); do
         local hex=$(printf "%X" $((RANDOM * 32768)))
         printf "${BR}>> ZERO-FILLING SECTOR 0x${hex} [TIME: %02d] ${DR}(SIGINT TO ABORT)${N} \r" "$i"
         sleep 1
@@ -64,7 +63,7 @@ shutdwn() {
 
     echo ""
     echo "${W}SYSTEM HALT.${N}"
-    
+
     trap - SIGINT
     shutdown -h now
 }
@@ -82,11 +81,11 @@ fetchrulette() { # doesn't really work atm
     selected_fetch="${fetches[$index]}"
     eval "$selected_fetch"
 }
-caffeine(){ # inhibit idling 
+caffeine() { # inhibit idling
     if [ "$1" = "on" ]; then
         echo "Caffeine mode ON (Idling disabled)"
         systemd-inhibit --what=idle --who="User" --why="Manual Override" sleep infinity &
-        echo $! > /tmp/caffeine.pid
+        echo $! >/tmp/caffeine.pid
     elif [ "$1" = "off" ]; then
         if [ -f /tmp/caffeine.pid ]; then
             kill $(cat /tmp/caffeine.pid)
@@ -102,13 +101,15 @@ caffeine(){ # inhibit idling
 }
 
 silent() { # pipe all output to dev/null and disown
-  "$@" &> /dev/null &!
+    "$@" &>/dev/null &|
 }
 
 connect() {
-    echo 'connect 80:C3:BA:96:B9:85' | bluetoothctl 
+    echo 'connect 80:C3:BA:96:B9:85' | bluetoothctl
 }
 
 disconnect() {
     echo 'disconnect' | bluetoothctl
 }
+
+copy() { printf '\033]52;c;%s\a' "$(base64 -w0)"; }
