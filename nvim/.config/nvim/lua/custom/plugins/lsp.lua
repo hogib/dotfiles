@@ -16,10 +16,13 @@ return {
       local ok_blink, blink = pcall(require, 'blink.cmp')
       if ok_blink then capabilities = blink.get_lsp_capabilities(capabilities) end
 
-      -- Multithreading
-      local nproc = tonumber(vim.fn.system { 'nproc' })
-      local jnproc = ''
-      if 0 ~= nproc then jnproc = '--j=' .. (nproc - 1) end
+      -- Multithreading. available_parallelism() instead of forking `nproc`:
+      -- no subprocess at startup, and it cannot return nil. The old version
+      -- did `tonumber(vim.fn.system{'nproc'})` and then `if 0 ~= nproc`, which
+      -- is TRUE when nproc is nil, so a failed call hit `nil - 1` and threw --
+      -- aborting this whole config function, i.e. no LSP at all.
+      local nproc = vim.uv.available_parallelism()
+      local jnproc = '--j=' .. math.max(1, nproc - 1)
 
       local servers = {
         clangd = {
@@ -67,6 +70,12 @@ return {
       }
 
       require('mason-tool-installer').setup {
+        -- Not on every startup. The default (run_on_start = true,
+        -- start_delay = 0) checks all of these at the exact moment the first
+        -- LSP is trying to attach, and the check needs mason's registry, which
+        -- is refreshed from GitHub when stale -- so how long it takes depends
+        -- on the network. Run `:MasonToolsUpdate` when you want it instead.
+        run_on_start = false,
         ensure_installed = {
           'gopls',
           'just',
@@ -89,6 +98,12 @@ return {
       require('mason-lspconfig').setup {
         ensure_installed = vim.tbl_keys(servers),
         automatic_installation = true,
+        -- v2 defaults this to true, which calls vim.lsp.enable() on EVERY
+        -- server mason has installed -- not just the ones configured above.
+        -- That was starting jedi_language_server alongside basedpyright on
+        -- every Python buffer, and stylua alongside lua_ls on every Lua one.
+        -- The loop below already enables exactly what `servers` lists.
+        automatic_enable = false,
       }
 
       for name, config in pairs(servers) do
