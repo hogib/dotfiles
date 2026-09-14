@@ -112,4 +112,12 @@ disconnect() {
     echo 'disconnect' | bluetoothctl
 }
 
+btoff() {
+    echo 'power off' | bluetoothctl
+}
+
+bton() {
+    echo 'power on' | bluetoothctl
+}
+
 copy() { printf '\033]52;c;%s\a' "$(base64 -w0)"; }
