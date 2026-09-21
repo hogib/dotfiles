@@ -1,6 +1,6 @@
 # ~/dotfiles/zsh/shell_scripts/functions.zsh
 
-shutdwn() {
+_shutdown() {
     # --- CONFIG ---
     local COUNTDOWN_SEC=${1:-10}
 
@@ -67,6 +67,7 @@ shutdwn() {
     trap - SIGINT
     shutdown -h now
 }
+
 fetchrulette() { # doesn't really work atm
     fetches=(
         "fastfetch"
@@ -81,6 +82,7 @@ fetchrulette() { # doesn't really work atm
     selected_fetch="${fetches[$index]}"
     eval "$selected_fetch"
 }
+
 caffeine() { # inhibit idling
     if [ "$1" = "on" ]; then
         echo "Caffeine mode ON (Idling disabled)"
@@ -121,3 +123,13 @@ bton() {
 }
 
 copy() { printf '\033]52;c;%s\a' "$(base64 -w0)"; }
+
+glall() {
+    for dir in *(/); do
+        if cd "$dir"; then
+            echo "Pulling $dir"
+            git pull
+            cd ..
+        fi
+    done
+}

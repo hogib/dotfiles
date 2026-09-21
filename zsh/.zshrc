@@ -20,7 +20,7 @@ plugins=(
     kitty
     zsh-history-substring-search
     zsh-vi-mode
-    zsh-syntax-highlighting
+    fast-syntax-highlighting
 )
 
 export ZSH="$HOME/.oh-my-zsh"
@@ -71,4 +71,8 @@ fpath+=~/.zfunc
 autoload -Uz compinit
 compinit
 
-fpath+=~/.zfunc; autoload -Uz compinit; compinit
+fpath+=~/.zfunc
+autoload -Uz compinit
+compinit
+
+eval $(thefuck --alias)
