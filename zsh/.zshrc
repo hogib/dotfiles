@@ -74,5 +74,3 @@ compinit
 fpath+=~/.zfunc
 autoload -Uz compinit
 compinit
-
-eval $(thefuck --alias)
