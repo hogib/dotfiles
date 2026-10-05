@@ -3,7 +3,33 @@ return {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     config = function()
-      local parsers = { 'c', 'cpp', 'lua', 'vim', 'vimdoc' }
+      -- No latex: VimTeX does its own highlighting and recommends against it
+      local parsers = {
+        'c',
+        'cpp',
+        'rust',
+        'go',
+        'gomod',
+        'gosum',
+        'python',
+        'bash',
+        'zsh',
+        'lua',
+        'luadoc',
+        'vim',
+        'vimdoc',
+        'query',
+        'javascript',
+        'typescript',
+        'meson',
+        'just',
+        'markdown',
+        'markdown_inline',
+        'json',
+        'toml',
+        'yaml',
+        'diff',
+      }
       local installed = require('nvim-treesitter.config').get_installed()
 
       local missing = vim.iter(parsers):filter(function(p) return not vim.tbl_contains(installed, p) end):totable()
@@ -11,8 +37,11 @@ return {
       if #missing > 0 then require('nvim-treesitter').install(missing) end
 
       vim.api.nvim_create_autocmd('FileType', {
-        desc = 'Enable native Tree-sitter syntax highlighting',
-        callback = function() pcall(vim.treesitter.start) end,
+        desc = 'Enable native Tree-sitter syntax highlighting and indentation',
+        callback = function(event)
+          if not pcall(vim.treesitter.start, event.buf) then return end
+          vim.bo[event.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        end,
       })
     end,
   },
@@ -53,20 +82,20 @@ return {
 
       -- Jump forward
       map_move(']f', ts_move.goto_next_start, '@function.outer', 'Next function start')
-      map_move(']c', ts_move.goto_next_start, '@class.outer', 'Next struct/enum start')
+      map_move(']k', ts_move.goto_next_start, '@class.outer', 'Next struct/enum start')
       map_move(']a', ts_move.goto_next_start, '@parameter.inner', 'Next parameter start')
 
       -- Jump backward
       map_move('[f', ts_move.goto_previous_start, '@function.outer', 'Previous function start')
-      map_move('[c', ts_move.goto_previous_start, '@class.outer', 'Previous struct/enum start')
+      map_move('[k', ts_move.goto_previous_start, '@class.outer', 'Previous struct/enum start')
       map_move('[a', ts_move.goto_previous_start, '@parameter.inner', 'Previous parameter start')
 
       -- Jump to the END of a text object
       map_move(']F', ts_move.goto_next_end, '@function.outer', 'Next function end')
-      map_move(']C', ts_move.goto_next_end, '@class.outer', 'Next struct/enum end')
+      map_move(']K', ts_move.goto_next_end, '@class.outer', 'Next struct/enum end')
 
       map_move('[F', ts_move.goto_previous_end, '@function.outer', 'Previous function end')
-      map_move('[C', ts_move.goto_previous_end, '@class.outer', 'Previous struct/enum end')
+      map_move('[K', ts_move.goto_previous_end, '@class.outer', 'Previous struct/enum end')
     end,
   },
 }

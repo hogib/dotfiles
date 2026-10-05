@@ -19,7 +19,6 @@ vim.opt.tabstop = 2 -- Number of spaces that a <Tab> in the file counts for
 vim.opt.shiftwidth = 2 -- Size of an indent
 vim.opt.softtabstop = 2 -- Number of spaces that a <Tab> counts for while performing editing operations
 vim.opt.expandtab = true -- Convert tabs to spaces
-vim.opt.listchars:remove("tab") -- Keeps 'list' on for trailing whitespace, etc., but stops showing tabs
 
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.o.ignorecase = true
@@ -63,3 +62,14 @@ vim.o.scrolloff = 10
 -- instead raise a dialog asking if you wish to save the current file(s)
 -- See `:help 'confirm'`
 vim.o.confirm = true
+
+-- Rounded borders on all floating windows (hover, signature help, diagnostics, ...)
+vim.o.winborder = 'rounded'
+
+-- Keep the text on screen still when opening/closing splits
+vim.o.splitkeep = 'screen'
+
+-- Allow the cursor past the end of the line in visual block mode
+vim.o.virtualedit = 'block'
+
+vim.o.undolevels = 10000

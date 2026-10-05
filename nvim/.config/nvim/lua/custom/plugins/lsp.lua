@@ -1,5 +1,16 @@
 return {
   {
+    -- Completion and types for `vim.*` and plugin APIs when editing this config
+    'folke/lazydev.nvim',
+    ft = 'lua',
+    opts = {
+      library = {
+        { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
+      },
+    },
+  },
+
+  {
     'neovim/nvim-lspconfig',
     lazy = false,
     dependencies = {
@@ -9,18 +20,11 @@ return {
       { 'j-hui/fidget.nvim', opts = {} },
     },
     config = function()
-      require 'lspconfig'
-
       local capabilities = vim.lsp.protocol.make_client_capabilities()
 
       local ok_blink, blink = pcall(require, 'blink.cmp')
       if ok_blink then capabilities = blink.get_lsp_capabilities(capabilities) end
 
-      -- Multithreading. available_parallelism() instead of forking `nproc`:
-      -- no subprocess at startup, and it cannot return nil. The old version
-      -- did `tonumber(vim.fn.system{'nproc'})` and then `if 0 ~= nproc`, which
-      -- is TRUE when nproc is nil, so a failed call hit `nil - 1` and threw --
-      -- aborting this whole config function, i.e. no LSP at all.
       local nproc = vim.uv.available_parallelism()
       local jnproc = '--j=' .. math.max(1, nproc - 1)
 
@@ -58,23 +62,24 @@ return {
               completion = {
                 callSnippet = 'Replace',
               },
-              diagnostics = {
-                globals = { 'vim' },
-              },
             },
           },
         },
         mesonlsp = {},
         ts_ls = {},
         just = {},
+        texlab = {
+          settings = {
+            texlab = {
+              -- vimtex does the building and forward search; chktex runs via nvim-lint
+              build = { onSave = false },
+              chktex = { onOpenAndSave = false, onEdit = false },
+            },
+          },
+        },
       }
 
       require('mason-tool-installer').setup {
-        -- Not on every startup. The default (run_on_start = true,
-        -- start_delay = 0) checks all of these at the exact moment the first
-        -- LSP is trying to attach, and the check needs mason's registry, which
-        -- is refreshed from GitHub when stale -- so how long it takes depends
-        -- on the network. Run `:MasonToolsUpdate` when you want it instead.
         run_on_start = false,
         ensure_installed = {
           'gopls',
@@ -92,17 +97,17 @@ return {
           'prettierd',
           'prettier',
           'mesonlsp',
+          'texlab',
+          'tex-fmt',
+          -- linters
+          'ruff',
+          'shellcheck',
+          'golangci-lint',
         },
       }
 
       require('mason-lspconfig').setup {
         ensure_installed = vim.tbl_keys(servers),
-        automatic_installation = true,
-        -- v2 defaults this to true, which calls vim.lsp.enable() on EVERY
-        -- server mason has installed -- not just the ones configured above.
-        -- That was starting jedi_language_server alongside basedpyright on
-        -- every Python buffer, and stylua alongside lua_ls on every Lua one.
-        -- The loop below already enables exactly what `servers` lists.
         automatic_enable = false,
       }
 
@@ -140,21 +145,34 @@ return {
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
-        python = { 'isort', 'black', stop_after_first = true },
-        go = { 'gofmt', 'goimports', stop_after_first = true },
+        -- isort sorts imports, then black formats; both need to run
+        python = { 'isort', 'black' },
+        -- goimports is gofmt plus import fixing; gofmt is the fallback
+        go = { 'goimports', 'gofmt', stop_after_first = true },
         c = { 'clang-format' },
         cpp = { 'clang-format' },
         javascript = { 'prettierd', 'prettier', stop_after_first = true },
+        sh = { 'shfmt' },
         bash = { 'shfmt' },
         zsh = { 'shfmt' },
         meson = { 'meson_format' },
         markdown = { 'prettier' },
-        markdown_inline = { 'prettier' },
+        tex = { 'tex-fmt' },
       },
       formatters = {
         ['clang-format'] = {
           prepend_args = { '--style=file', '--fallback-style=LLVM' },
         },
+        -- shfmt guesses the dialect from the file extension, which misses
+        -- ~/.zshrc and friends
+        shfmt = {
+          prepend_args = function(_, ctx)
+            if vim.bo[ctx.buf].filetype == 'zsh' then return { '-ln', 'zsh' } end
+            return {}
+          end,
+        },
+        -- Keep line breaks as written instead of hard-wrapping at 80 columns
+        ['tex-fmt'] = { prepend_args = { '--nowrap' } },
         ['meson_format'] = {
           command = 'meson',
           args = { 'format', '-' },
@@ -192,7 +210,10 @@ return {
         },
       },
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'buffer' },
+        default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
+        providers = {
+          lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
+        },
       },
       snippets = {
         preset = 'luasnip',

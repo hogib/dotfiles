@@ -15,8 +15,9 @@ require('lazy').setup {
   spec = {
     --  { import = 'plugins' },
     { import = 'custom.plugins' },
-  -- { import = 'kickstart.plugins' },
+    -- { import = 'kickstart.plugins' },
   },
 
+  install = { colorscheme = { 'tokyonight-night' } },
   change_detection = { notify = false },
 }

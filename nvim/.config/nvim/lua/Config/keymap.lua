@@ -15,7 +15,11 @@ vim.diagnostic.config {
   virtual_lines = false, -- Text shows up underneath the line, with virtual lines
 
   -- Auto open the float, so you can easily read the errors when jumping with `[d` and `]d`
-  jump = { float = true },
+  jump = {
+    on_jump = function(diagnostic)
+      if diagnostic then vim.diagnostic.open_float() end
+    end,
+  },
 }
 
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
@@ -44,12 +48,10 @@ vim.keymap.set(nav_modes, 'Ü', '}', { remap = true })
 
 vim.keymap.set('n', '<leader>cd', vim.cmd.Ex, { desc = 'netrw File Explorer' })
 
-vim.keymap.set(
-  'n',
-  '<leader>th',
-  function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled(current_buf), current_buf) end,
-  { desc = '[T]oggle Inlay [H]ints' }
-)
+vim.keymap.set('n', '<leader>th', function()
+  local filter = { bufnr = 0 }
+  vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled(filter), filter)
+end, { desc = '[T]oggle Inlay [H]ints' })
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -62,10 +64,11 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function() vim.hl.on_yank() end,
 })
 
-function _G.set_terminal_keymaps()
-  local opts = { buffer = 0 }
-  vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
-  vim.keymap.set('t', 'jk', [[<C-\><C-n>]], opts)
+-- Terminal keymaps. A single <Esc> is passed through so TUI apps
+-- (lazygit, fzf, ...) still get it; double it to leave terminal mode.
+local function set_terminal_keymaps(event)
+  local opts = { buffer = event.buf }
+  vim.keymap.set('t', '<Esc><Esc>', [[<C-\><C-n>]], opts)
   vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
   vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
   vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
@@ -73,7 +76,11 @@ function _G.set_terminal_keymaps()
   vim.keymap.set('t', '<C-w>', [[<C-\><C-n><C-w>]], opts)
 end
 
-vim.cmd 'autocmd! TermOpen term://* lua set_terminal_keymaps()'
+vim.api.nvim_create_autocmd('TermOpen', {
+  desc = 'Terminal keymaps',
+  group = vim.api.nvim_create_augroup('custom-terminal-keymaps', { clear = true }),
+  callback = set_terminal_keymaps,
+})
 
 vim.keymap.set('n', '<leader>tl', function()
   local config = vim.diagnostic.config()
