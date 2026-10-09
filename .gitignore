@@ -1,7 +1,7 @@
 # Laptop packets from pacman. useless unless you're me
-laptop_native.txt 
+laptop_native.txt
 # same for yay 
-yays.txt 
+yays.txt
 # --- OS Junk ---
 .DS_Store
 Thumbs.db
@@ -35,8 +35,14 @@ dist/
 *.o
 bin/
 
-# workspaces shall be ignored to be fixed later. configure monitors and workspace binding as described in wiki 
-log.txt 
+log.txt
+
+# Machine-specific monitor layout (included as optional from niri config.kdl)
 niri/.config/niri/monitors.kdl
-niri/.config/niri/inputs.kdl
+
+# Hyprland first-run marker
+hypr/.config/hypr/.initial_startup_done
 nvim/.config/nvim/lazy-lock.json
+
+# tmux plugins are installed by tpm
+tmux/.config/tmux/plugins/

@@ -1,18 +1,18 @@
-hotkey-overlay {
-    skip-at-startup
-}
-
-screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
-
-
-// modular design look all made so good by me
+// Modular config: each concern lives in its own file.
 include optional=true "./workspaces.kdl"
 include "./env.kdl"
-include "./binds.kdl" 
-include "./windowrules.kdl" 
+include "./binds.kdl"
+include "./windowrules.kdl"
 include "./decorations.kdl"
 include optional=true "./monitors.kdl"
 include "./inputs.kdl"
 include "./startup.kdl"
 include optional=true "./laptop.kdl"
 
+hotkey-overlay {
+    skip-at-startup
+}
+
+screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+
+prefer-no-csd

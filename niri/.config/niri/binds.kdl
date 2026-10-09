@@ -1,43 +1,37 @@
+// Keys are for the Turkish Q layout: idotless sits where I is on US,
+// udiaeresis/gbreve where the brackets are, scedilla where semicolon is.
 binds {
-
     Mod+Shift+scedilla { show-hotkey-overlay; }
 
+    // Apps
     Mod+T hotkey-overlay-title="Open a Terminal: kitty" { spawn "kitty"; }
     Mod+Return hotkey-overlay-title="Open a Terminal: kitty" { spawn "kitty"; }
-    Super+Alt+L hotkey-overlay-title="Lock the Screen: Noctalia" { spawn-sh "noctalia msg session lock";}
     Mod+B hotkey-overlay-title="Run an Application: firefox" { spawn "firefox"; }
     Mod+E hotkey-overlay-title="Run an Application: nautilus" { spawn "nautilus"; }
+    Mod+P repeat=false hotkey-overlay-title="Mirror Focused Output" { spawn-sh "wl-mirror $(niri msg --json focused-output | jq -r .name)"; }
 
-    // Core Noctalia binds
+    // Noctalia
+    Mod+Alt+L hotkey-overlay-title="Lock the Screen: Noctalia" { spawn-sh "noctalia msg session lock"; }
     Mod+D { spawn-sh "noctalia msg panel-toggle launcher"; }
     Mod+S { spawn-sh "noctalia msg panel-toggle control-center"; }
     Mod+G { spawn-sh "noctalia msg settings-toggle"; }
 
-    // Audio & Brightness
-    XF86AudioRaiseVolume { spawn-sh "noctalia msg volume-up"; }
-    XF86AudioLowerVolume { spawn-sh "noctalia msg volume-down"; }
-    XF86AudioMute { spawn-sh "noctalia msg volume-mute"; }
-    XF86MonBrightnessUp { spawn-sh "noctalia msg brightness-up"; }
+    // Audio, brightness & media
+    XF86AudioRaiseVolume  { spawn-sh "noctalia msg volume-up"; }
+    XF86AudioLowerVolume  { spawn-sh "noctalia msg volume-down"; }
+    XF86AudioMute         { spawn-sh "noctalia msg volume-mute"; }
+    XF86MonBrightnessUp   { spawn-sh "noctalia msg brightness-up"; }
     XF86MonBrightnessDown { spawn-sh "noctalia msg brightness-down"; }
+    XF86AudioMicMute allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
+    XF86AudioPlay    allow-when-locked=true { spawn-sh "playerctl play-pause"; }
+    XF86AudioStop    allow-when-locked=true { spawn-sh "playerctl stop"; }
+    XF86AudioPrev    allow-when-locked=true { spawn-sh "playerctl previous"; }
+    XF86AudioNext    allow-when-locked=true { spawn-sh "playerctl next"; }
 
-    XF86AudioMicMute     allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
-
-    // Example media keys mapping using playerctl.
-    // This will work with any MPRIS-enabled media player.
-    XF86AudioPlay        allow-when-locked=true { spawn-sh "playerctl play-pause"; }
-    XF86AudioStop        allow-when-locked=true { spawn-sh "playerctl stop"; }
-    XF86AudioPrev        allow-when-locked=true { spawn-sh "playerctl previous"; }
-    XF86AudioNext        allow-when-locked=true { spawn-sh "playerctl next"; }
-
-
-    // Open/close the Overview: a zoomed-out view of workspaces and windows.
-    // You can also move the mouse into the top-left hot corner,
-    // or do a four-finger swipe up on a touchpad.
     Mod+O repeat=false { toggle-overview; }
-
     Mod+Q repeat=false { close-window; }
 
-    
+    // Focus / move within a workspace
     Mod+Left  { focus-column-left; }
     Mod+Down  { focus-window-down; }
     Mod+Up    { focus-window-up; }
@@ -56,11 +50,12 @@ binds {
     Mod+Shift+K     { move-window-up; }
     Mod+Shift+L     { move-column-right; }
 
-    Mod+Home { focus-column-first; }
-    Mod+End  { focus-column-last; }
+    Mod+Home       { focus-column-first; }
+    Mod+End        { focus-column-last; }
     Mod+Shift+Home { move-column-to-first; }
     Mod+Shift+End  { move-column-to-last; }
 
+    // Monitors
     Mod+Ctrl+Left  { focus-monitor-left; }
     Mod+Ctrl+Down  { focus-monitor-down; }
     Mod+Ctrl+Up    { focus-monitor-up; }
@@ -79,56 +74,25 @@ binds {
     Mod+Shift+Ctrl+K     { move-column-to-monitor-up; }
     Mod+Shift+Ctrl+L     { move-column-to-monitor-right; }
 
-    // Alternatively, there are commands to move just a single window:
-    // Mod+Shift+Ctrl+Left  { move-window-to-monitor-left; }
-    // ...
-
-    // And you can also move a whole workspace to another monitor:
     Mod+Alt+Ctrl+Left  { move-workspace-to-monitor-left; }
-    Mod+Alt+Ctrl+Right  { move-workspace-to-monitor-right; }
-    Mod+Alt+Ctrl+H  { move-workspace-to-monitor-left; }
-    Mod+Alt+Ctrl+L  { move-workspace-to-monitor-right; }
+    Mod+Alt+Ctrl+Right { move-workspace-to-monitor-right; }
+    Mod+Alt+Ctrl+H     { move-workspace-to-monitor-left; }
+    Mod+Alt+Ctrl+L     { move-workspace-to-monitor-right; }
 
-    Mod+Page_Down      { focus-workspace-down; }
-    Mod+Page_Up        { focus-workspace-up; }
-    Mod+U              { focus-workspace-down; }
-    Mod+idotless              { focus-workspace-up; }
+    // Workspaces
+    Mod+Page_Down       { focus-workspace-down; }
+    Mod+Page_Up         { focus-workspace-up; }
+    Mod+U               { focus-workspace-down; }
+    Mod+idotless        { focus-workspace-up; }
     Mod+Shift+Page_Down { move-column-to-workspace-down; }
     Mod+Shift+Page_Up   { move-column-to-workspace-up; }
     Mod+Shift+U         { move-column-to-workspace-down; }
-    Mod+Shift+idotless         { move-column-to-workspace-up; }
-
-    // Alternatively, there are commands to move just a single window:
-    // Mod+Ctrl+Page_Down { move-window-to-workspace-down; }
-    // ...
+    Mod+Shift+idotless  { move-column-to-workspace-up; }
 
     Mod+Ctrl+Page_Down { move-workspace-down; }
     Mod+Ctrl+Page_Up   { move-workspace-up; }
-    Mod+Ctrl+Y         { move-workspace-down; }
-    Mod+Ctrl+U         { move-workspace-up; }
-
-    // You can bind mouse wheel scroll ticks using the following syntax.
-    // These binds will change direction based on the natural-scroll setting.
-    //
-    // To avoid scrolling through workspaces really fast, you can use
-    // the cooldown-ms property. The bind will be rate-limited to this value.
-    // You can set a cooldown on any bind, but it's most useful for the wheel.
-    Mod+WheelScrollDown      cooldown-ms=150 { focus-workspace-down; }
-    Mod+WheelScrollUp        cooldown-ms=150 { focus-workspace-up; }
-    Mod+Shift+Ctrl+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
-    Mod+Shift+Ctrl+WheelScrollUp   cooldown-ms=150 { move-column-to-workspace-up; }
-
-    Mod+WheelScrollRight      { focus-column-right; }
-    Mod+WheelScrollLeft       { focus-column-left; }
-    Mod+Shift+WheelScrollRight { move-column-right; }
-    Mod+Shift+WheelScrollLeft  { move-column-left; }
-
-    // Usually scrolling up and down with Shift in applications results in
-    // horizontal scrolling; these binds replicate that.
-    Mod+Ctrl+WheelScrollDown      { focus-column-right; }
-    Mod+Ctrl+WheelScrollUp        { focus-column-left; }
-    Mod+Shift+WheelScrollDown { move-column-right; }
-    Mod+Shift+WheelScrollUp   { move-column-left; }
+    Mod+Ctrl+U         { move-workspace-down; }
+    Mod+Ctrl+idotless  { move-workspace-up; }
 
     Mod+1 { focus-workspace 1; }
     Mod+2 { focus-workspace 2; }
@@ -149,80 +113,53 @@ binds {
     Mod+Shift+8 { move-column-to-workspace 8; }
     Mod+Shift+9 { move-column-to-workspace 9; }
 
-    // The following binds move the focused window in and out of a column.
-    // If the window is alone, they will consume it into the nearby column to the side.
-    // If the window is already in a column, they will expel it out.
-    Mod+udiaeresis  { consume-or-expel-window-right; }
-    Mod+gbreve { consume-or-expel-window-left; }
+    // Mouse wheel
+    Mod+WheelScrollDown            cooldown-ms=150 { focus-workspace-down; }
+    Mod+WheelScrollUp              cooldown-ms=150 { focus-workspace-up; }
+    Mod+Shift+Ctrl+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
+    Mod+Shift+Ctrl+WheelScrollUp   cooldown-ms=150 { move-column-to-workspace-up; }
 
-    // Consume one window from the right to the bottom of the focused column.
-    Mod+Comma  { consume-window-into-column; }
-    // Expel the bottom window from the focused column to the right.
-    Mod+Period { expel-window-from-column; }
+    Mod+WheelScrollRight       { focus-column-right; }
+    Mod+WheelScrollLeft        { focus-column-left; }
+    Mod+Shift+WheelScrollRight { move-column-right; }
+    Mod+Shift+WheelScrollLeft  { move-column-left; }
+    Mod+Ctrl+WheelScrollDown   { focus-column-right; }
+    Mod+Ctrl+WheelScrollUp     { focus-column-left; }
+    Mod+Shift+WheelScrollDown  { move-column-right; }
+    Mod+Shift+WheelScrollUp    { move-column-left; }
 
-    Mod+R { switch-preset-column-width; }
-    // Cycling through the presets in reverse order is also possible.
-    // Mod+R { switch-preset-column-width-back; }
+    // Columns & windows
+    Mod+udiaeresis { consume-or-expel-window-right; }
+    Mod+gbreve     { consume-or-expel-window-left; }
+    Mod+Comma      { consume-window-into-column; }
+    Mod+Period     { expel-window-from-column; }
+
+    Mod+R       { switch-preset-column-width; }
     Mod+Shift+R { switch-preset-window-height; }
-    Mod+Ctrl+R { reset-window-height; }
-    Mod+F { maximize-column; }
+    Mod+Ctrl+R  { reset-window-height; }
+    Mod+F       { maximize-column; }
     Mod+Shift+F { fullscreen-window; }
+    Mod+Ctrl+F  { expand-column-to-available-width; }
+    Mod+C       { center-column; }
+    Mod+Ctrl+C  { center-visible-columns; }
 
-    // Expand the focused column to space not taken up by other fully visible columns.
-    // Makes the column "fill the rest of the space".
-    Mod+Ctrl+F { expand-column-to-available-width; }
-
-    Mod+C { center-column; }
-
-    // Center all fully visible columns on screen.
-    Mod+Ctrl+C { center-visible-columns; }
-
-    // Finer width adjustments.
-    // This command can also:
-    // * set width in pixels: "1000"
-    // * adjust width in pixels: "-5" or "+5"
-    // * set width as a percentage of screen width: "25%"
-    // * adjust width as a percentage of screen width: "-10%" or "+10%"
-    // Pixel sizes use logical, or scaled, pixels. I.e. on an output with scale 2.0,
-    // set-column-width "100" will make the column occupy 200 physical screen pixels.
-    Mod+Minus { set-column-width "-10%"; }
-    Mod+asterisk { set-column-width "+10%"; }
-
-    // Finer height adjustments when in column with other windows.
-    Mod+Shift+Minus { set-window-height "-10%"; }
+    Mod+Minus          { set-column-width "-10%"; }
+    Mod+asterisk       { set-column-width "+10%"; }
+    Mod+Shift+Minus    { set-window-height "-10%"; }
     Mod+Shift+asterisk { set-window-height "+10%"; }
 
-    // Move the focused window between the floating and the tiling layout.
     Mod+V       { toggle-window-floating; }
     Mod+Shift+V { switch-focus-between-floating-and-tiling; }
+    Mod+W       { toggle-column-tabbed-display; }
 
-    // Toggle tabbed column display mode.
-    // Windows in this column will appear as vertical tabs,
-    // rather than stacked on top of each other.
-    Mod+W { toggle-column-tabbed-display; }
-
-    // Actions to switch layouts.
-    // Note: if you uncomment these, make sure you do NOT have
-    // a matching layout switch hotkey configured in xkb options above.
-    // Having both at once on the same hotkey will break the switching,
-    // since it will switch twice upon pressing the hotkey (once by xkb, once by niri).
-    // Mod+Space       { switch-layout "next"; }
-    // Mod+Shift+Space { switch-layout "prev"; }
-
-    Print { screenshot; }
+    // Screenshots
+    Print      { screenshot; }
     Ctrl+Print { screenshot-screen; }
-    Alt+Print { screenshot-window; }
+    Alt+Print  { screenshot-window; }
 
-
+    // Session
     Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
-
-    // The quit action will show a confirmation dialog to avoid accidental exits.
-    Mod+Shift+E { quit; }
+    Mod+Shift+E     { quit; }
     Ctrl+Alt+Delete { quit; }
-
-    // Powers off the monitors. To turn them back on, do any input like
-    // moving the mouse or pressing any other key.
-    Mod+Shift+P { power-off-monitors; }
-
-    Mod+P repeat=false { spawn-sh "wl-mirror $(niri msg --json focused-output | jq -r .name)"; }
+    Mod+Shift+P     { power-off-monitors; }
 }

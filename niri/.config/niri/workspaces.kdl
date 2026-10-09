@@ -1,4 +1,3 @@
-workspace "1"{
-open-on-output "DP-2"
+workspace "1" {
+    open-on-output "DP-2"
 }
-

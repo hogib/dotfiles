@@ -1,8 +1,4 @@
 spawn-at-startup "noctalia"
-// spawn-sh-at-startup "swaybg -i ~/Pictures/wallpapers/wp10531685-firewatch-4k-wallpapers.png"
 spawn-at-startup "xdg-desktop-portal-gnome"
-// To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
-// spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
-// spawn-at-startup "dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY XAUTHORITY"
-spawn-at-startup "xhost +si:localuser:root"
-spawn-at-startup "dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
+spawn-at-startup "xhost" "+si:localuser:root"
+spawn-at-startup "dbus-update-activation-environment" "--systemd" "DISPLAY" "WAYLAND_DISPLAY" "XDG_CURRENT_DESKTOP"

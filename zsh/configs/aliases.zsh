@@ -16,7 +16,7 @@ alias src='source ~/.zshrc'
 alias arc='nvim ~/dotfiles/zsh/configs/aliases.zsh'
 alias frc='nvim ~/dotfiles/zsh/shell_scripts/functions.zsh'
 alias clr='clear'
-alias dots='cd ~/dotfiles && git pull && cd'
+alias dots='cd ~/dotfiles && git pull; cd -'
 alias gpf='git push origin main --force-with-lease'
 
 # Suffix aliases

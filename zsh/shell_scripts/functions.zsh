@@ -68,19 +68,18 @@ _shutdown() {
     shutdown -h now
 }
 
-fetchrulette() { # doesn't really work atm
-    fetches=(
-        "fastfetch"
-        "bifetch"
-        "transfetch"
-        "archfetch"
-        "ytufetch"
-
-    )
-    size=${#fetches[@]}
-    index=$((RANDOM % size))
-    selected_fetch="${fetches[$index]}"
-    eval "$selected_fetch"
+fetchrulette() { # run a random installed fetch
+    local -a fetches=()
+    local f
+    for f in fastfetch bifetch transfetch archfetch ytufetch; do
+        (( $+commands[$f] )) && fetches+=("$f")
+    done
+    if (( ${#fetches} == 0 )); then
+        echo "fetchrulette: no fetch programs installed"
+        return 1
+    fi
+    # zsh arrays are 1-indexed
+    "${fetches[RANDOM % ${#fetches} + 1]}"
 }
 
 caffeine() { # inhibit idling
