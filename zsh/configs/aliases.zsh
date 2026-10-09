@@ -35,6 +35,8 @@ alias vpn='nordvpn connect'
 alias dsc='nordvpn disconnect'
 alias killsw='nordvpn set killswitch on'
 alias nkillsw='nordvpn set killswitch off'
+alias home='nordvpn set technology NORDLYNX'
+alias away='nordvpn set technology OPENVPN'
 
 #compiler and build system aliases
 alias cc='clang'
