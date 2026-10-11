@@ -77,6 +77,14 @@ return {
             },
           },
         },
+        ltex_plus = {
+          filetypes = { 'tex', 'bib', 'markdown' },
+          settings = {
+            ltex = {
+              language = 'en-GB',
+            },
+          },
+        },
       }
 
       require('mason-tool-installer').setup {
@@ -99,6 +107,7 @@ return {
           'mesonlsp',
           'texlab',
           'tex-fmt',
+          'ltex-ls-plus',
           -- linters
           'ruff',
           'shellcheck',
