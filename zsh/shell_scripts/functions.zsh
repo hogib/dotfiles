@@ -72,9 +72,9 @@ fetchrulette() { # run a random installed fetch
     local -a fetches=()
     local f
     for f in fastfetch bifetch transfetch archfetch ytufetch; do
-        (( $+commands[$f] )) && fetches+=("$f")
+        (($+commands[$f])) && fetches+=("$f")
     done
-    if (( ${#fetches} == 0 )); then
+    if ((${#fetches} == 0)); then
         echo "fetchrulette: no fetch programs installed"
         return 1
     fi
@@ -105,30 +105,72 @@ silent() { # pipe all output to dev/null and disown
     "$@" &>/dev/null &|
 }
 
-connect() {
-    echo 'connect 80:C3:BA:96:B9:85' | bluetoothctl
-}
+connect() { bluetoothctl connect 80:C3:BA:96:B9:85; }
 
-disconnect() {
-    echo 'disconnect' | bluetoothctl
-}
+disconnect() { bluetoothctl disconnect; }
 
-btoff() {
-    echo 'power off' | bluetoothctl
-}
+btoff() { bluetoothctl power off; }
 
-bton() {
-    echo 'power on' | bluetoothctl
-}
-
-copy() { printf '\033]52;c;%s\a' "$(base64 -w0)"; }
+bton() { bluetoothctl power on; }
 
 glall() {
-    for dir in *(/); do
-        if cd "$dir"; then
-            echo "Pulling $dir"
+    find . -name ".git" -prune -execdir sh -c '
+        if [ -n "$(git remote)" ]; then
+            echo "Pulling $(pwd)..."
             git pull
-            cd ..
         fi
-    done
+    ' \;
+}
+
+extract() {
+    if [[ ! -f "$1" ]]; then
+        echo "'$1' is not a valid file"
+        return 1
+    fi
+    case "$1" in
+    *.tar.bz2 | *.tbz2) tar xjf "$1" ;;
+    *.tar.gz | *.tgz) tar xzf "$1" ;;
+    *.tar.xz | *.txz) tar xJf "$1" ;;
+    *.tar.zst) tar --zstd -xf "$1" ;;
+    *.tar) tar xf "$1" ;;
+    *.bz2) bunzip2 "$1" ;;
+    *.gz) gunzip "$1" ;;
+    *.zip) unzip "$1" ;;
+    *.7z) 7z x "$1" ;;
+    *.zst) unzstd "$1" ;;
+    *) echo "'$1' cannot be extracted via extract()" ;;
+    esac
+}
+
+copy() {
+    local data
+    if (($# > 0)); then
+        data=$(base64 -w0 <"$1")
+    else
+        data=$(base64 -w0)
+    fi
+    printf '\033]52;c;%s\a' "$data"
+}
+
+bak() {
+    cp -a -- "$1" "${1}.$(date +%Y%m%d-%H%M).bak"
+}
+
+groot() {
+    local root
+    root=$(git rev-parse --show-toplevel 2>/dev/null) && cd "$root" || echo "Not in a git repo"
+}
+
+cdf() {
+    local file
+    file=$(fzf +m -q "$1") && cd "$(dirname "$file")"
+}
+
+cdf() {
+    local file
+    file=$(fzf +m -q "$1") && cd "$(dirname "$file")"
+}
+
+mkcd() {
+    mkdir -p -- "$1" && cd -P -- "$1"
 }
