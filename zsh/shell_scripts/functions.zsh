@@ -166,11 +166,6 @@ cdf() {
     file=$(fzf +m -q "$1") && cd "$(dirname "$file")"
 }
 
-cdf() {
-    local file
-    file=$(fzf +m -q "$1") && cd "$(dirname "$file")"
-}
-
 mkcd() {
     mkdir -p -- "$1" && cd -P -- "$1"
 }
