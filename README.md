@@ -8,6 +8,7 @@ Each top-level directory is a Stow package. Running `stow <package>` from the re
 
 ```
 dotfiles/
+├── bash/   # Bash port of the zsh setup, for machines without zsh
 ├── git/    # Git config
 ├── hypr/   # Hyprland window manager (hypridle)
 ├── kitty/  # Kitty terminal
@@ -18,6 +19,13 @@ dotfiles/
 ```
 
 ## Contents
+
+### Bash (`bash/`)
+`.bashrc` plus `.config/bash/{aliases,functions,weird}.bash`: the same aliases and functions as the
+zsh package, for servers where only bash is available. Uses eza, bat, fzf, zoxide, direnv, starship
+(in place of powerlevel10k), vi editing mode, history search on the arrow keys and bash-completion;
+optional ble.sh for autosuggestions and syntax highlighting, advcpmv for the `cp`/`mv` aliases.
+Zsh-only features (suffix and global aliases, fzf-tab) have no equivalent; `o FILE` opens by extension.
 
 ### Git (`git/`)
 Global `.gitconfig`: rebase on pull, zdiff3 conflicts, histogram diffs, SSH for GitHub URLs.
