@@ -180,8 +180,8 @@ return {
             return {}
           end,
         },
-        -- Keep line breaks as written instead of hard-wrapping at 80 columns
-        ['tex-fmt'] = { prepend_args = { '--nowrap' } },
+        -- Hard-wrap lines longer than --wraplen chars (tex-fmt default: 80)
+        ['tex-fmt'] = { prepend_args = { '--wraplen', '100' } },
         ['meson_format'] = {
           command = 'meson',
           args = { 'format', '-' },
