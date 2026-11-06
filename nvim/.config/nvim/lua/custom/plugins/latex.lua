@@ -38,7 +38,7 @@ return {
         vim.opt_local.wrap = true
         vim.opt_local.linebreak = true -- wrap at word boundaries
         vim.opt_local.spell = true
-        vim.opt_local.spelllang = 'en_us'
+        vim.opt_local.spelllang = 'en_us,tr' -- tr.utf-8.spl lives in ~/.local/share/nvim/site/spell
         vim.opt_local.conceallevel = 2
       end,
     })
