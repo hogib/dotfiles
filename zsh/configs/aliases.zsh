@@ -52,4 +52,5 @@ alias -g L="| less"
 alias nv='nvim .'
 
 alias cn='connect'
+alias ds='disconnect'
 alias zat='silent zathura'
