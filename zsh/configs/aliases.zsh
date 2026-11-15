@@ -50,3 +50,6 @@ alias -g C="| wl-copy"
 alias -g L="| less"
 
 alias nv='nvim .'
+
+alias cn='connect'
+alias zat='silent zathura'
