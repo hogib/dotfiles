@@ -30,16 +30,36 @@ return {
     vim.g.vimtex_format_enabled = 0
   end,
   config = function()
+    local autosave = vim.api.nvim_create_augroup('custom-latex-autosave', { clear = true })
+
     vim.api.nvim_create_autocmd('FileType', {
       desc = 'LaTeX buffer settings',
       group = vim.api.nvim_create_augroup('custom-latex', { clear = true }),
       pattern = { 'tex', 'plaintex', 'bib' },
-      callback = function()
+      callback = function(event)
         vim.opt_local.wrap = true
         vim.opt_local.linebreak = true -- wrap at word boundaries
         vim.opt_local.spell = true
-        vim.opt_local.spelllang = 'en_us,tr' -- tr.utf-8.spl lives in ~/.local/share/nvim/site/spell
+        -- en_gb to match ltex_plus (lsp.lua); tr.utf-8.spl lives in ~/.local/share/nvim/site/spell
+        vim.opt_local.spelllang = 'en_gb,tr'
         vim.opt_local.conceallevel = 2
+
+        -- Save on leaving insert mode, so latexmk's continuous mode
+        -- (<localleader>ll) recompiles and zathura reloads, Overleaf-style.
+        -- noautocmd skips conform's format-on-save, so tex-fmt doesn't rewrap
+        -- lines on every <Esc>; a manual :w still formats.
+        -- Cleared first so a re-fired FileType doesn't stack duplicates.
+        vim.api.nvim_clear_autocmds { group = autosave, buffer = event.buf }
+        vim.api.nvim_create_autocmd('InsertLeave', {
+          desc = 'Save LaTeX buffer to trigger a rebuild',
+          group = autosave,
+          buffer = event.buf,
+          callback = function()
+            if vim.bo[event.buf].buftype == '' and vim.api.nvim_buf_get_name(event.buf) ~= '' then
+              vim.cmd 'silent! noautocmd update'
+            end
+          end,
+        })
       end,
     })
   end,

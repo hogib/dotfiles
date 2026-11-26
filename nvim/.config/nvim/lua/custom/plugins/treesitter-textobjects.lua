@@ -39,6 +39,9 @@ return {
       vim.api.nvim_create_autocmd('FileType', {
         desc = 'Enable native Tree-sitter syntax highlighting and indentation',
         callback = function(event)
+          -- VimTeX's own syntax drives math-zone detection and conceal; a stray
+          -- latex parser on disk would otherwise take over these buffers
+          if vim.tbl_contains({ 'tex', 'plaintex', 'bib' }, event.match) then return end
           if not pcall(vim.treesitter.start, event.buf) then return end
           vim.bo[event.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
         end,
