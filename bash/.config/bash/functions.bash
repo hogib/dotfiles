@@ -1,4 +1,4 @@
-# ~/.config/bash/functions.bash  -- port of ~/dotfiles/zsh/shell_scripts/functions.zsh
+# ~/.config/bash/functions.bash  -- port of ~/.config/zsh/functions.zsh
 # Left out on the server: _shutdown (halts the machine), nordvpn and bluetooth helpers.
 
 fetchrulette() { # run a random installed fetch

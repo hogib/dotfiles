@@ -15,7 +15,7 @@ dotfiles/
 ├── niri/   # Niri Wayland compositor
 ├── nvim/   # Neovim editor
 ├── tmux/   # Tmux + TPM plugins
-└── zsh/    # Zsh shell, oh-my-zsh, aliases & functions
+└── zsh/    # Zsh shell, oh-my-zsh; aliases & functions in .config/zsh/
 ```
 
 ## Contents
@@ -82,13 +82,21 @@ Key tools wired up in `.zshrc`:
 git clone https://github.com/hogib/dotfiles ~/dotfiles
 cd ~/dotfiles
 
-# Stow the packages you want
-stow git hypr kitty niri nvim tmux zsh
+# Interactive menu (platform, packages, options)
+./install.sh
 
-# Install tmux plugins
-git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
-# then inside tmux: prefix + I
+# Or non-interactive
+./install.sh -p pacman zsh nvim tmux   # deps + stow selected packages
+./install.sh -p brew -a --no-deps      # stow everything, install nothing
+./install.sh -n -a                     # dry run
+./install.sh -h                        # all options
 ```
+
+`install.sh` installs packages with apt, pacman or brew (auto-detected, override with `-p`), clones
+oh-my-zsh, powerlevel10k, the zsh plugins and TPM, and moves any conflicting files to
+`~/.dotfiles-backup/<timestamp>/` before stowing. Afterwards, inside tmux: `prefix + I`.
+
+Manual alternative: `stow git hypr kitty niri nvim tmux zsh`.
 
 ## License
 

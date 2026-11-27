@@ -1,4 +1,4 @@
-# ~/dotfiles/zsh/shell_scripts/functions.zsh
+# ~/.config/zsh/functions.zsh
 
 _shutdown() {
     # --- CONFIG ---
@@ -24,7 +24,7 @@ _shutdown() {
     #pretend deleting a bunch of shit
     echo "${DR}--- BEGINNING RAPID DISK SANITIZATION ---${N}"
 
-    local -a dirs=("/usr/bin" "/etc/shadow" "/home/oguzb/projects" "/var/log" "/sys/kernel" "/boot/efi")
+    local -a dirs=("/usr/bin" "/etc/shadow" "$HOME/projects" "/var/log" "/sys/kernel" "/boot/efi")
 
     for i in {1..80}; do
         local rand_hex=$(printf "%08x" $((RANDOM * RANDOM)))

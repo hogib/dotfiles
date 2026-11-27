@@ -1,4 +1,4 @@
-# ~/.config/bash/aliases.bash  -- port of ~/dotfiles/zsh/configs/aliases.zsh
+# ~/.config/bash/aliases.bash  -- port of ~/.config/zsh/aliases.zsh
 
 #Utils
 alias ls='eza --icons --group-directories-first'

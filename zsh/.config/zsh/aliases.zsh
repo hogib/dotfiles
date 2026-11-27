@@ -13,10 +13,10 @@ alias lg='lazygit'
 
 alias rc='nvim ~/.zshrc'
 alias src='source ~/.zshrc'
-alias arc='nvim ~/dotfiles/zsh/configs/aliases.zsh'
-alias frc='nvim ~/dotfiles/zsh/shell_scripts/functions.zsh'
+alias arc='nvim "$ZSH_CONFIG_DIR/aliases.zsh"'
+alias frc='nvim "$ZSH_CONFIG_DIR/functions.zsh"'
 alias clr='clear'
-alias dots='cd ~/dotfiles && git pull; cd -'
+alias dots='git -C "$DOTFILES" pull'
 alias gpf='git push origin main --force-with-lease'
 
 # Suffix aliases
