@@ -7,8 +7,10 @@ alias la='ll'
 
 alias cat='bat'
 alias rm='rm -i'
+if [[ -f /opt/advcp || /usr/bin ]]; then 
 alias cp='advcp -i -g'
 alias mv='advmv -i -g'
+fi
 alias lg='lazygit'
 
 alias rc='nvim ~/.zshrc'
